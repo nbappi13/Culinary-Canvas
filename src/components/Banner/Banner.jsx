@@ -1,10 +1,13 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import Lottie from 'lottie-react';
+import lottieAnimation from '../../assets/lottie/animation.json'; 
 import image1 from '../../assets/slide/slider1.jpg';
 import image2 from '../../assets/slide/slider2.jpg';
 import image3 from '../../assets/slide/slider3.jpg';
 import image4 from '../../assets/slide/slider4.jpg';
 import image5 from '../../assets/slide/slider5.jpg';
+import '../../styles/Banner.css';
 
 const images = [image1, image2, image3, image4, image5];
 
@@ -35,12 +38,7 @@ const waveVariants = {
 
 const Banner = () => {
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 1 }}
-      className="banner-container"
-    >
+    <div className="banner-container">
       <motion.div
         className="banner-text"
         variants={textVariants}
@@ -53,7 +51,10 @@ const Banner = () => {
         >
           Welcome to Culinary Canvas
         </motion.h1>
-        <p>Experience the best dining</p>
+        <div className="lottie-text-container">
+          <Lottie animationData={lottieAnimation} className="lottie-animation" />
+          <p className="banner-subtitle">Experience the best dining</p>
+        </div>
       </motion.div>
       <div className="banner-content">
         <motion.div
@@ -82,7 +83,7 @@ const Banner = () => {
           ))}
         </motion.div>
       </div>
-    </motion.div>
+    </div>
   );
 };
 

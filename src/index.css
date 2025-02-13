@@ -2,13 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
-
-
 :root {
   --bg-color: #ffffff;
   --text-color: #000000;
   --navbar-bg: #f8f9fa;
   --navbar-text: #000000;
+  --subtitle-font: 'Cursive', sans-serif;
 }
 
 [data-theme="dark"] {
@@ -28,68 +27,4 @@ body {
   background-color: var(--navbar-bg);
   color: var(--navbar-text);
   transition: background-color 0.3s, color 0.3s;
-}
-
-.banner-container {
-  position: relative;
-  width: 100%;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: var(--bg-color);
-  overflow: hidden;
-  transition: background-color 0.3s;
-}
-
-.banner-text {
-  position: absolute;
-  top: 20%;
-  text-align: center;
-  z-index: 10;
-}
-
-.banner-text h1 {
-  font-size: 3rem;
-  font-weight: bold;
-  color: var(--text-color);
-  display: inline-block;
-  transition: color 0.3s;
-}
-
-.banner-text p {
-  font-size: 1.5rem;
-  color: var(--text-color);
-  margin-bottom: 1.5rem;
-  transition: color 0.3s;
-}
-
-.banner-content {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.image-gallery {
-  display: flex;
-  gap: 2rem;
-  width: 200%;
-}
-
-.image-wrapper {
-  overflow: hidden;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  flex: 0 0 auto;
-  width: 400px;
-  height: 300px;
-}
-
-.banner-image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
 }
