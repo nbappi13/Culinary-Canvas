@@ -29,7 +29,7 @@ const Foods = () => {
     <div className="foods-container">
       <h1 className="text-center text-3xl font-bold mb-6">All Foods</h1>
       <div className="filters-container">
-       
+
       </div>
       <motion.div
         className="food-cards-container grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"
