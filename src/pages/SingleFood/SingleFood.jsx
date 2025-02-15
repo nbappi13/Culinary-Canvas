@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import '../../styles/SingleFood.css';
 
 const SingleFood = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [food, setFood] = useState(null);
   const [purchaseCount, setPurchaseCount] = useState(0);
 
@@ -21,26 +22,26 @@ const SingleFood = () => {
     };
 
     fetchFood();
+
+    const handlePurchaseSuccess = async () => {
+      try {
+        const response = await axios.get(`/api/foods/${id}`);
+        setFood(response.data);
+        setPurchaseCount(response.data.purchaseCount || 0);
+      } catch (error) {
+        console.error('Error fetching updated food:', error);
+      }
+    };
+
+    window.addEventListener('purchaseSuccess', handlePurchaseSuccess);
+
+    return () => {
+      window.removeEventListener('purchaseSuccess', handlePurchaseSuccess);
+    };
   }, [id]);
 
-  const handlePurchase = async () => {
-    try {
-      await axios.post(`/api/foods/${id}/purchase`);
-      setPurchaseCount((prevCount) => prevCount + 1);
-      Swal.fire({
-        title: 'Purchase Successful!',
-        icon: 'success',
-        timer: 1500,
-        showConfirmButton: false,
-      });
-    } catch (error) {
-      console.error('Purchase error:', error);
-      Swal.fire({
-        title: 'Purchase Failed!',
-        text: 'An error occurred while making the purchase.',
-        icon: 'error',
-      });
-    }
+  const handlePurchaseClick = () => {
+    navigate(`/purchase/${id}`);
   };
 
   if (!food) {
@@ -66,7 +67,7 @@ const SingleFood = () => {
           </ul>
           <p><strong>Making Procedure:</strong> {food.description.makingProcedure}</p>
           <p><strong>Food Origin:</strong> {food.foodOrigin}</p>
-          <button onClick={handlePurchase} className="purchase-button">
+          <button onClick={handlePurchaseClick} className="purchase-button">
             Purchase
           </button>
         </div>
