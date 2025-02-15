@@ -7,6 +7,11 @@
   --text-color: #000000;
   --navbar-bg: #f8f9fa;
   --navbar-text: #000000;
+  --card-bg: #ffffff;
+  --card-text: #000000;
+  --button-bg: #007bff;
+  --button-text: #ffffff;
+  --button-hover-bg: #0056b3;
   --subtitle-font: 'Cursive', sans-serif;
 }
 
@@ -15,6 +20,11 @@
   --text-color: #ffffff;
   --navbar-bg: #333333;
   --navbar-text: #ffffff;
+  --card-bg: #1e1e1e;
+  --card-text: #ffffff;
+  --button-bg: #007bff;
+  --button-text: #ffffff;
+  --button-hover-bg: #0056b3;
 }
 
 body {
@@ -27,4 +37,72 @@ body {
   background-color: var(--navbar-bg);
   color: var(--navbar-text);
   transition: background-color 0.3s, color 0.3s;
+}
+
+.food-card {
+  background-color: var(--card-bg);
+  color: var(--card-text);
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: transform 0.2s;
+}
+
+.food-card:hover {
+  transform: translateY(-5px);
+}
+
+.food-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.food-card h2 {
+  font-size: 1.5rem;
+  margin: 0.5rem 0;
+}
+
+.food-card p {
+  font-size: 1rem;
+  margin: 0.5rem 0;
+}
+
+.details-button {
+  background-color: var(--button-bg);
+  color: var(--button-text);
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.details-button:hover {
+  background-color: var(--button-hover-bg);
+}
+
+.spinner-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.error-message {
+  color: red;
+  text-align: center;
+  margin-top: 20px;
+}
+
+.foods-container {
+  padding: 2rem;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+
+.food-cards-container {
+  display: grid;
+  gap: 1rem;
 }

@@ -12,7 +12,9 @@ export const getAllFoods = async (filters = {}) => {
 };
 
 export const useFoods = (filters = {}) => {
-  return useQuery(['foods', filters], () => getAllFoods(filters), {
+  return useQuery({
+    queryKey: ['foods', filters],
+    queryFn: () => getAllFoods(filters),
     keepPreviousData: true,
   });
 };
@@ -20,15 +22,13 @@ export const useFoods = (filters = {}) => {
 export const useAddFood = () => {
   const queryClient = useQueryClient();
 
-  return useMutation(
-    async (newFood) => {
+  return useMutation({
+    mutationFn: async (newFood) => {
       const response = await axios.post('/api/foods', newFood);
       return response.data;
     },
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries(['foods']);
-      },
-    }
-  );
+    onSuccess: () => {
+      queryClient.invalidateQueries(['foods']);
+    },
+  });
 };
