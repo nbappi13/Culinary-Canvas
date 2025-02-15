@@ -36,7 +36,6 @@ const FoodPurchase = () => {
         quantity,
         buyerName: currentUser.displayName,
         buyerEmail: currentUser.email,
-        buyingDate: Date.now(),
       };
 
       await axios.post('/api/purchase', purchaseData);
@@ -48,7 +47,6 @@ const FoodPurchase = () => {
         showConfirmButton: false,
       });
 
-      // Inform the SingleFood page to update its state
       window.dispatchEvent(new CustomEvent('purchaseSuccess'));
 
       navigate(`/food/${id}`);

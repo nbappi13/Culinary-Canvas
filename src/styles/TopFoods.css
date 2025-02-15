@@ -1,0 +1,57 @@
+.top-foods-container {
+    padding: 2rem;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+  }
+  
+  .top-foods-title {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  }
+  
+  .top-foods-grid {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 1rem;
+  }
+  
+  @media (min-width: 640px) { 
+    .top-foods-grid {
+      grid-template-columns: repeat(1, 1fr);
+    }
+  }
+  
+  @media (min-width: 768px) { 
+    .top-foods-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  
+  @media (min-width: 1024px) { 
+    .top-foods-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  
+  @media (min-width: 1280px) { 
+    .top-foods-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  
+  .see-all-button {
+    display: block;
+    margin: 2rem auto;
+    padding: 0.5rem 1rem;
+    background-color: var(--button-bg);
+    color: var(--button-text);
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+  
+  .see-all-button:hover {
+    background-color: var(--button-hover-bg);
+  }
