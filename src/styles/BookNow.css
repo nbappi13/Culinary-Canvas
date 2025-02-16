@@ -1,0 +1,15 @@
+.book-now-container {
+    background-image: url('/src/assets/private_dining.jpg');
+  }
+  
+  .book-now-title {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  }
+  
+  .book-now-form {
+    max-width: 500px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+  }

@@ -6,6 +6,7 @@ import Register from '../pages/Register/Register';
 import Foods from '../pages/Foods/Foods';
 import SingleFood from '../pages/SingleFood/SingleFood';
 import FoodPurchase from '../pages/FoodPurchase/FoodPurchase';
+import BookNow from '../pages/BookNow/BookNow'; 
 import PrivateRoute from './PrivateRoute';
 
 const router = createBrowserRouter([
@@ -23,6 +24,14 @@ const router = createBrowserRouter([
         element: (
           <PrivateRoute>
             <FoodPurchase />
+          </PrivateRoute>
+        ),
+      },
+      { 
+        path: '/book-now', 
+        element: (
+          <PrivateRoute>
+            <BookNow />
           </PrivateRoute>
         ),
       },
