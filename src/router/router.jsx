@@ -6,7 +6,8 @@ import Register from '../pages/Register/Register';
 import Foods from '../pages/Foods/Foods';
 import SingleFood from '../pages/SingleFood/SingleFood';
 import FoodPurchase from '../pages/FoodPurchase/FoodPurchase';
-import BookNow from '../pages/BookNow/BookNow'; 
+import BookNow from '../pages/BookNow/BookNow';
+import Gallery from '../pages/Gallery/Gallery'; 
 import PrivateRoute from './PrivateRoute';
 
 const router = createBrowserRouter([
@@ -35,6 +36,7 @@ const router = createBrowserRouter([
           </PrivateRoute>
         ),
       },
+      { path: '/gallery', element: <Gallery /> }, 
     ],
   },
 ]);
