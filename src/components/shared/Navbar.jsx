@@ -61,6 +61,19 @@ const Navbar = () => {
             <li>
               <Link to="/gallery">Gallery</Link>
             </li>
+            {currentUser && (
+              <>
+                <li>
+                  <Link to="/my-foods">My Foods</Link>
+                </li>
+                <li>
+                  <Link to="/add-food">Add Food</Link>
+                </li>
+                <li>
+                  <button onClick={handleLogout}>Logout</button>
+                </li>
+              </>
+            )}
           </ul>
         </div>
         <Link to="/" className="flex items-center space-x-2 text-xl font-bold">
@@ -84,6 +97,19 @@ const Navbar = () => {
           <li>
             <Link to="/gallery">Gallery</Link>
           </li>
+          {currentUser && (
+            <>
+              <li>
+                <Link to="/my-foods">My Foods</Link>
+              </li>
+              <li>
+                <Link to="/add-food">Add Food</Link>
+              </li>
+              <li>
+                <button onClick={handleLogout}>Logout</button>
+              </li>
+            </>
+          )}
         </ul>
       </div>
 

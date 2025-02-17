@@ -7,7 +7,9 @@ import Foods from '../pages/Foods/Foods';
 import SingleFood from '../pages/SingleFood/SingleFood';
 import FoodPurchase from '../pages/FoodPurchase/FoodPurchase';
 import BookNow from '../pages/BookNow/BookNow';
-import Gallery from '../pages/Gallery/Gallery'; 
+import Gallery from '../pages/Gallery/Gallery';
+import MyFoods from '../pages/MyFoods/MyFoods';
+import AddFood from '../pages/AddFood/AddFood';
 import PrivateRoute from './PrivateRoute';
 
 const router = createBrowserRouter([
@@ -36,7 +38,23 @@ const router = createBrowserRouter([
           </PrivateRoute>
         ),
       },
-      { path: '/gallery', element: <Gallery /> }, 
+      { path: '/gallery', element: <Gallery /> },
+      { 
+        path: '/my-foods', 
+        element: (
+          <PrivateRoute>
+            <MyFoods />
+          </PrivateRoute>
+        ),
+      },
+      { 
+        path: '/add-food', 
+        element: (
+          <PrivateRoute>
+            <AddFood />
+          </PrivateRoute>
+        ),
+      },
     ],
   },
 ]);

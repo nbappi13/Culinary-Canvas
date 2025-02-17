@@ -1,0 +1,48 @@
+.my-foods-page {
+    padding: 2rem;
+  }
+  
+  .my-foods-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .my-foods-table th, .my-foods-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+  }
+  
+  .my-foods-table th {
+    background-color: #f2f2f2;
+  }
+  
+  .my-foods-table td img {
+    width: 100px;
+    height: auto;
+    border-radius: 10px;
+  }
+  
+  .my-foods-table td {
+    text-align: center;
+  }
+  
+  .my-foods-table button {
+    padding: 0.5rem 1rem;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .my-foods-table button:hover {
+    background-color: #0056b3;
+  }
+  
+  .my-foods-table td[colspan="4"] {
+    text-align: center;
+    padding: 1rem;
+    font-size: 1.2rem;
+    color: #777;
+  }
