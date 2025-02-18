@@ -6,17 +6,18 @@ import '../../styles/MyFoods.css';
 
 const MyFoods = () => {
   const { currentUser } = useAuth();
-  const { data: foods, refetch } = useMyFoods(currentUser.email);
+  const { data: foods, refetch, isFetching } = useMyFoods(currentUser.email);
   const [selectedFood, setSelectedFood] = useState(null);
 
   const handleUpdateSuccess = () => {
-    refetch();
-    setSelectedFood(null);
+    refetch(); 
+    setSelectedFood(null); 
   };
 
   return (
     <div className="my-foods-page">
       <h1>My Foods</h1>
+      {isFetching && <p>Loading...</p>}
       <table className="my-foods-table">
         <thead>
           <tr>
@@ -48,11 +49,7 @@ const MyFoods = () => {
         </tbody>
       </table>
       {selectedFood && (
-        <UpdateFoodModal
-          food={selectedFood}
-          onSuccess={handleUpdateSuccess}
-          onClose={() => setSelectedFood(null)}
-        />
+        <UpdateFoodModal food={selectedFood} onSuccess={handleUpdateSuccess} onClose={() => setSelectedFood(null)} />
       )}
     </div>
   );

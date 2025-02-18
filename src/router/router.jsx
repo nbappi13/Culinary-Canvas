@@ -22,16 +22,16 @@ const router = createBrowserRouter([
       { path: '/register', element: <Register /> },
       { path: '/all-foods', element: <Foods /> },
       { path: '/food/:id', element: <SingleFood /> },
-      { 
-        path: '/purchase/:id', 
+      {
+        path: '/purchase/:id',
         element: (
           <PrivateRoute>
             <FoodPurchase />
           </PrivateRoute>
         ),
       },
-      { 
-        path: '/book-now', 
+      {
+        path: '/book-now',
         element: (
           <PrivateRoute>
             <BookNow />
@@ -39,16 +39,16 @@ const router = createBrowserRouter([
         ),
       },
       { path: '/gallery', element: <Gallery /> },
-      { 
-        path: '/my-foods', 
+      {
+        path: '/my-foods',
         element: (
           <PrivateRoute>
             <MyFoods />
           </PrivateRoute>
         ),
       },
-      { 
-        path: '/add-food', 
+      {
+        path: '/add-food',
         element: (
           <PrivateRoute>
             <AddFood />

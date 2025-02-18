@@ -12,11 +12,16 @@ const SingleFood = () => {
   useEffect(() => {
     const fetchFood = async () => {
       try {
-        const response = await axios.get(`/api/foods/${id}`);
-        setFood(response.data);
-        setPurchaseCount(response.data.purchaseCount || 0);
+        const response = await axios.get(`http://localhost:5000/api/foods/${id}`);
+        if (response.status === 200) {
+          setFood(response.data);
+          setPurchaseCount(response.data.purchaseCount || 0);
+        } else {
+          navigate('/not-found');
+        }
       } catch (error) {
         console.error('Error fetching food:', error);
+        navigate('/not-found');
       }
     };
 
@@ -24,9 +29,11 @@ const SingleFood = () => {
 
     const handlePurchaseSuccess = async () => {
       try {
-        const response = await axios.get(`/api/foods/${id}`);
-        setFood(response.data);
-        setPurchaseCount(response.data.purchaseCount || 0);
+        const response = await axios.get(`http://localhost:5000/api/foods/${id}`);
+        if (response.status === 200) {
+          setFood(response.data);
+          setPurchaseCount(response.data.purchaseCount || 0);
+        }
       } catch (error) {
         console.error('Error fetching updated food:', error);
       }
@@ -37,7 +44,7 @@ const SingleFood = () => {
     return () => {
       window.removeEventListener('purchaseSuccess', handlePurchaseSuccess);
     };
-  }, [id]);
+  }, [id, navigate]);
 
   const handlePurchaseClick = () => {
     navigate(`/purchase/${id}`);

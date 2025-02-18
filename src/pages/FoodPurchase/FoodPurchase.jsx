@@ -16,7 +16,7 @@ const FoodPurchase = () => {
   useEffect(() => {
     const fetchFood = async () => {
       try {
-        const response = await axios.get(`/api/foods/${id}`);
+        const response = await axios.get(`http://localhost:5000/api/foods/${id}`);
         setFood(response.data);
         setIsAvailable(response.data.quantity > 0);
       } catch (error) {
@@ -38,7 +38,11 @@ const FoodPurchase = () => {
         buyerEmail: currentUser.email,
       };
 
-      await axios.post('/api/purchase', purchaseData);
+      await axios.post(`http://localhost:5000/api/foods/${id}/purchase`, purchaseData, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
 
       Swal.fire({
         title: 'Purchase Successful!',

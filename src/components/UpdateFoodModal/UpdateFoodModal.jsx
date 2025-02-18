@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Modal from 'react-modal';
+import Swal from 'sweetalert2';
 import { useUpdateFood } from '../../services/foodService';
 import { useAuth } from '../../context/AuthProvider';
 import '../../styles/UpdateFoodModal.css';
@@ -9,25 +10,36 @@ Modal.setAppElement('#root');
 const UpdateFoodModal = ({ food, onSuccess, onClose }) => {
   const { currentUser } = useAuth();
   const updateFoodMutation = useUpdateFood();
-  const initialFormData = {
-    ...food,
-    description: {
-      shortDescription: food.description.shortDescription || '',
-      foodOrigin: food.description.foodOrigin || '',
-    },
-  };
-  const [formData, setFormData] = useState(initialFormData);
+
+  const [formData, setFormData] = useState({
+    name: '',
+    image: '',
+    category: '',
+    quantity: '',
+    price: '',
+    description: { shortDescription: '', foodOrigin: '' },
+  });
+
   const [isUpdating, setIsUpdating] = useState(false);
+
+  useEffect(() => {
+    if (food) {
+      setFormData({
+        ...food,
+        description: {
+          shortDescription: food.description?.shortDescription || '',
+          foodOrigin: food.description?.foodOrigin || '',
+        },
+      });
+    }
+  }, [food]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     if (name in formData.description) {
       setFormData((prevData) => ({
         ...prevData,
-        description: {
-          ...prevData.description,
-          [name]: value,
-        },
+        description: { ...prevData.description, [name]: value },
       }));
     } else {
       setFormData((prevData) => ({ ...prevData, [name]: value }));
@@ -51,13 +63,25 @@ const UpdateFoodModal = ({ food, onSuccess, onClose }) => {
     };
 
     try {
-      await updateFoodMutation.mutateAsync({ id: food._id, foodData: updatedFoodData, email: currentUser.email });
-      setFormData(initialFormData); 
-      onSuccess();
+      await updateFoodMutation.mutateAsync({
+        id: food._id,
+        foodData: updatedFoodData,
+        email: currentUser.email,
+      });
+
+      Swal.fire({
+        title: 'Update Successful!',
+        icon: 'success',
+        timer: 1500,
+        showConfirmButton: false,
+      });
+
+      onSuccess(); 
     } catch (error) {
       console.error('Error updating food:', error.message);
     } finally {
       setIsUpdating(false);
+      onClose(); 
     }
   };
 
@@ -74,77 +98,36 @@ const UpdateFoodModal = ({ food, onSuccess, onClose }) => {
         <div className="form-group">
           <label>
             Name:
-            <input
-              type="text"
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
-              disabled={isUpdating}
-            />
+            <input type="text" name="name" value={formData.name} onChange={handleChange} disabled={isUpdating} />
           </label>
           <label>
             Price:
-            <input
-              type="number"
-              name="price"
-              value={formData.price}
-              onChange={handleChange}
-              disabled={isUpdating}
-            />
+            <input type="number" name="price" value={formData.price} onChange={handleChange} disabled={isUpdating} />
           </label>
         </div>
         <div className="form-group">
           <label>
             Quantity:
-            <input
-              type="number"
-              name="quantity"
-              value={formData.quantity}
-              onChange={handleChange}
-              disabled={isUpdating}
-            />
+            <input type="number" name="quantity" value={formData.quantity} onChange={handleChange} disabled={isUpdating} />
           </label>
           <label>
             Category:
-            <input
-              type="text"
-              name="category"
-              value={formData.category}
-              onChange={handleChange}
-              disabled={isUpdating}
-            />
+            <input type="text" name="category" value={formData.category} onChange={handleChange} disabled={isUpdating} />
           </label>
         </div>
         <div className="form-group">
           <label>
             Image URL:
-            <input
-              type="text"
-              name="image"
-              value={formData.image}
-              onChange={handleChange}
-              disabled={isUpdating}
-            />
+            <input type="text" name="image" value={formData.image} onChange={handleChange} disabled={isUpdating} />
           </label>
           <label>
             Origin:
-            <input
-              type="text"
-              name="foodOrigin"
-              value={formData.description.foodOrigin}
-              onChange={handleChange}
-              disabled={isUpdating}
-            />
+            <input type="text" name="foodOrigin" value={formData.description.foodOrigin} onChange={handleChange} disabled={isUpdating} />
           </label>
         </div>
         <label>
           Description:
-          <textarea
-            name="shortDescription"
-            value={formData.description.shortDescription}
-            onChange={handleChange}
-            disabled={isUpdating}
-          />
+          <textarea name="shortDescription" value={formData.description.shortDescription} onChange={handleChange} disabled={isUpdating} />
         </label>
         <div className="modal-buttons">
           <button type="submit" disabled={isUpdating}>{isUpdating ? 'Updating...' : 'Update'}</button>
