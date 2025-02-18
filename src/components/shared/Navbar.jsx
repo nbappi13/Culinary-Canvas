@@ -56,7 +56,7 @@ const Navbar = () => {
               <Link to="/">Home</Link>
             </li>
             <li>
-              <Link to="/all-foods">All Foods</Link> 
+              <Link to="/all-foods">All Foods</Link>
             </li>
             <li>
               <Link to="/gallery">Gallery</Link>
@@ -68,6 +68,9 @@ const Navbar = () => {
                 </li>
                 <li>
                   <Link to="/add-food">Add Food</Link>
+                </li>
+                <li>
+                  <Link to="/my-orders">My Orders</Link>
                 </li>
                 <li>
                   <button onClick={handleLogout}>Logout</button>
@@ -92,7 +95,7 @@ const Navbar = () => {
             <Link to="/">Home</Link>
           </li>
           <li>
-            <Link to="/all-foods">All Foods</Link> 
+            <Link to="/all-foods">All Foods</Link>
           </li>
           <li>
             <Link to="/gallery">Gallery</Link>
@@ -104,6 +107,9 @@ const Navbar = () => {
               </li>
               <li>
                 <Link to="/add-food">Add Food</Link>
+              </li>
+              <li>
+                <Link to="/my-orders">My Orders</Link>
               </li>
               <li>
                 <button onClick={handleLogout}>Logout</button>

@@ -1,0 +1,38 @@
+.my-orders-page {
+    padding: 20px;
+  }
+  
+  .my-orders-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+  
+  .my-orders-table th, .my-orders-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+  }
+  
+  .my-orders-table th {
+    background-color: #f2f2f2;
+    text-align: left;
+  }
+  
+  .my-orders-table img {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+  }
+  
+  .my-orders-table button {
+    padding: 5px 10px;
+    background-color: #f44336;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .my-orders-table button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }

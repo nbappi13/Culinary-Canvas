@@ -10,6 +10,7 @@ import BookNow from '../pages/BookNow/BookNow';
 import Gallery from '../pages/Gallery/Gallery';
 import MyFoods from '../pages/MyFoods/MyFoods';
 import AddFood from '../pages/AddFood/AddFood';
+import MyOrders from '../pages/MyOrders/MyOrders';
 import PrivateRoute from './PrivateRoute';
 
 const router = createBrowserRouter([
@@ -52,6 +53,14 @@ const router = createBrowserRouter([
         element: (
           <PrivateRoute>
             <AddFood />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: '/my-orders',
+        element: (
+          <PrivateRoute>
+            <MyOrders />
           </PrivateRoute>
         ),
       },

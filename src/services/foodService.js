@@ -35,10 +35,27 @@ export const getMyFoods = async (email) => {
 };
 
 
+export const getMyOrders = async (email) => {
+  const response = await axios.get(`${API_BASE_URL}/my-orders`, {
+    headers: { email },
+  });
+  return response.data;
+};
+
+
+export const deleteOrder = async (id, email) => {
+  const response = await axios.delete(`${API_BASE_URL}/my-orders/${id}`, {
+    headers: { email },
+  });
+  return response.data;
+};
+
+
 export const addFood = async (foodData) => {
   const response = await axios.post(`${API_BASE_URL}/add-food`, foodData);
   return response.data;
 };
+
 
 export const updateFood = async (id, foodData, email) => {
   if (!id || id.length !== 24) {
@@ -76,6 +93,14 @@ export const useMyFoods = (email) => {
   });
 };
 
+export const useMyOrders = (email) => {
+  return useQuery({
+    queryKey: ['my-orders', email],
+    queryFn: () => getMyOrders(email),
+    enabled: !!email,
+  });
+};
+
 export const useAddFood = () => {
   const queryClient = useQueryClient();
   return useMutation({
@@ -83,7 +108,7 @@ export const useAddFood = () => {
     onSuccess: () => {
       queryClient.invalidateQueries(['foods']);
       queryClient.invalidateQueries(['my-foods']);
-      queryClient.invalidateQueries(['top-foods']); 
+      queryClient.invalidateQueries(['top-foods']);
     },
   });
 };
@@ -95,7 +120,17 @@ export const useUpdateFood = () => {
     onSuccess: () => {
       queryClient.invalidateQueries(['my-foods']);
       queryClient.invalidateQueries(['foods']);
-      queryClient.invalidateQueries(['top-foods']); 
+      queryClient.invalidateQueries(['top-foods']);
+    },
+  });
+};
+
+export const useDeleteOrder = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async ({ id, email }) => deleteOrder(id, email),
+    onSuccess: () => {
+      queryClient.invalidateQueries(['my-orders']);
     },
   });
 };
