@@ -1,30 +1,31 @@
-import { createBrowserRouter } from 'react-router-dom';
-import MainLayout from '../layout/MainLayout';
-import Home from '../pages/Home/Home';
-import Login from '../pages/Login/Login';
-import Register from '../pages/Register/Register';
-import Foods from '../pages/Foods/Foods';
-import SingleFood from '../pages/SingleFood/SingleFood';
-import FoodPurchase from '../pages/FoodPurchase/FoodPurchase';
-import BookNow from '../pages/BookNow/BookNow';
-import Gallery from '../pages/Gallery/Gallery';
-import MyFoods from '../pages/MyFoods/MyFoods';
-import AddFood from '../pages/AddFood/AddFood';
-import MyOrders from '../pages/MyOrders/MyOrders';
-import PrivateRoute from './PrivateRoute';
+import { createBrowserRouter } from "react-router-dom";
+import MainLayout from "../layout/MainLayout";
+import Home from "../pages/Home/Home";
+import Login from "../pages/Login/Login";
+import Register from "../pages/Register/Register";
+import Foods from "../pages/Foods/Foods";
+import SingleFood from "../pages/SingleFood/SingleFood";
+import FoodPurchase from "../pages/FoodPurchase/FoodPurchase";
+import BookNow from "../pages/BookNow/BookNow";
+import Gallery from "../pages/Gallery/Gallery";
+import MyFoods from "../pages/MyFoods/MyFoods";
+import AddFood from "../pages/AddFood/AddFood";
+import MyOrders from "../pages/MyOrders/MyOrders";
+import PrivateRoute from "./PrivateRoute";
+import ErrorPage from "../pages/ErrorPage/ErrorPage";
 
 const router = createBrowserRouter([
   {
-    path: '/',
+    path: "/",
     element: <MainLayout />,
     children: [
-      { path: '/', element: <Home /> },
-      { path: '/login', element: <Login /> },
-      { path: '/register', element: <Register /> },
-      { path: '/all-foods', element: <Foods /> },
-      { path: '/food/:id', element: <SingleFood /> },
+      { path: "/", element: <Home /> },
+      { path: "/login", element: <Login /> },
+      { path: "/register", element: <Register /> },
+      { path: "/all-foods", element: <Foods /> },
+      { path: "/food/:id", element: <SingleFood /> },
       {
-        path: '/purchase/:id',
+        path: "/purchase/:id",
         element: (
           <PrivateRoute>
             <FoodPurchase />
@@ -32,16 +33,16 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: '/book-now',
+        path: "/book-now",
         element: (
           <PrivateRoute>
             <BookNow />
           </PrivateRoute>
         ),
       },
-      { path: '/gallery', element: <Gallery /> },
+      { path: "/gallery", element: <Gallery /> },
       {
-        path: '/my-foods',
+        path: "/my-foods",
         element: (
           <PrivateRoute>
             <MyFoods />
@@ -49,7 +50,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: '/add-food',
+        path: "/add-food",
         element: (
           <PrivateRoute>
             <AddFood />
@@ -57,13 +58,14 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: '/my-orders',
+        path: "/my-orders",
         element: (
           <PrivateRoute>
             <MyOrders />
           </PrivateRoute>
         ),
       },
+      { path: "*", element: <ErrorPage /> }, 
     ],
   },
 ]);
