@@ -8,11 +8,18 @@ import "../../styles/Foods.css";
 const Foods = () => {
   const [filters, setFilters] = useState({});
   const [currentPage, setCurrentPage] = useState(1);
+  const [searchTerm, setSearchTerm] = useState("");
   const { data, isLoading, isError, error } = useFoods(filters, currentPage);
 
   const handleFilterChange = (newFilters) => {
     setFilters((prevFilters) => ({ ...prevFilters, ...newFilters }));
-    setCurrentPage(1); 
+    setCurrentPage(1);
+  };
+
+  const handleSearch = (e) => {
+    const value = e.target.value;
+    setSearchTerm(value);
+    handleFilterChange({ name: value });
   };
 
   const handlePageChange = (newPage) => {
@@ -35,7 +42,15 @@ const Foods = () => {
     <div className="foods-container">
       <h1 className="text-center text-3xl font-bold mb-6">All Foods</h1>
       <div className="filters-container">
-      
+        <div className="search-container mb-6 max-w-md mx-auto">
+          <input
+            type="text"
+            placeholder="Search food by name..."
+            className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            value={searchTerm}
+            onChange={handleSearch}
+          />
+        </div>
       </div>
       <motion.div
         className="food-cards-container grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"
