@@ -4,12 +4,13 @@ import { AuthContext } from '../context/AuthProvider';
 
 const PrivateRoute = ({ children }) => {
   const { currentUser, loading } = useContext(AuthContext);
+  const token = localStorage.getItem('token');
 
   if (loading) {
     return <div>Loading...</div>;
   }
 
-  if (!currentUser) {
+  if (!currentUser || !token) {
     return <Navigate to="/login" />;
   }
 

@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import Swal from 'sweetalert2';
 import { AuthContext } from '../../context/AuthProvider';
 import '../../styles/FoodPurchase.css';
+import axiosInstance from '../../utils/axiosInstance';
 
 const FoodPurchase = () => {
   const { id } = useParams();
@@ -16,11 +16,16 @@ const FoodPurchase = () => {
   useEffect(() => {
     const fetchFood = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/api/foods/${id}`);
+        const response = await axiosInstance.get(`/foods/${id}`);
         setFood(response.data);
         setIsAvailable(response.data.quantity > 0);
       } catch (error) {
         console.error('Error fetching food:', error);
+        Swal.fire({
+          title: 'Error!',
+          text: 'Failed to fetch food details.',
+          icon: 'error',
+        });
       }
     };
 
@@ -38,27 +43,35 @@ const FoodPurchase = () => {
         buyerEmail: currentUser.email,
       };
 
-      await axios.post(`http://localhost:5000/api/foods/${id}/purchase`, purchaseData, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
+      const response = await axiosInstance.post(`/foods/${id}/purchase`, purchaseData);
 
-      Swal.fire({
-        title: 'Purchase Successful!',
-        icon: 'success',
-        timer: 1500,
-        showConfirmButton: false,
-      });
+      if (response.status === 201) {
+        Swal.fire({
+          title: 'Purchase Successful!',
+          icon: 'success',
+          timer: 1500,
+          showConfirmButton: false,
+        });
 
-      window.dispatchEvent(new CustomEvent('purchaseSuccess'));
-
-      navigate(`/food/${id}`);
+        window.dispatchEvent(new CustomEvent('purchaseSuccess'));
+        navigate(`/food/${id}`);
+      } else {
+        throw new Error('Unexpected response status');
+      }
     } catch (error) {
       console.error('Purchase error:', error);
+      let errorMessage = 'An error occurred while making the purchase.';
+      if (error.response) {
+        if (error.response.status === 401) {
+          errorMessage = 'You are not authorized. Please log in again.';
+          
+        } else if (error.response.data && error.response.data.message) {
+          errorMessage = error.response.data.message;
+        }
+      }
       Swal.fire({
         title: 'Purchase Failed!',
-        text: 'An error occurred while making the purchase.',
+        text: errorMessage,
         icon: 'error',
       });
     }
@@ -73,7 +86,7 @@ const FoodPurchase = () => {
       <h1 className="text-center text-3xl font-bold mb-6">Purchase {food.name}</h1>
       <div className="purchase-form">
         <div className="food-image-container">
-          <img src={food.image} alt={food.name} className="food-image" />
+          <img src={food.image || "/placeholder.svg"} alt={food.name} className="food-image" />
         </div>
         <div className="food-details-container">
           <p><strong>Food Name:</strong> {food.name}</p>
@@ -85,7 +98,7 @@ const FoodPurchase = () => {
               value={quantity} 
               min="1" 
               max={food.quantity} 
-              onChange={(e) => setQuantity(Math.min(e.target.value, food.quantity))} 
+              onChange={(e) => setQuantity(Math.min(parseInt(e.target.value), food.quantity))} 
             />
           </div>
           <p><strong>Buyer Name:</strong> {currentUser.displayName}</p>

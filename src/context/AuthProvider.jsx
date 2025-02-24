@@ -20,6 +20,7 @@ const AuthProvider = ({ children }) => {
   const logout = async () => {
     try {
       await auth.signOut();
+      localStorage.removeItem('token');
     } catch (error) {
       console.error('Error logging out:', error);
     }

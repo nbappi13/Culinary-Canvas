@@ -1,24 +1,21 @@
-import axios from 'axios';
+import axiosInstance from '../utils/axiosInstance';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 
-const API_BASE_URL = 'http://localhost:5000/api';
-
+const API_BASE_URL = import.meta.env.VITE_APP_BASE_URL;
 
 export const getAllFoods = async (filters = {}) => {
-  const response = await axios.get(`${API_BASE_URL}/foods`, { params: filters });
+  const response = await axiosInstance.get('/foods', { params: filters });
   return response.data;
 };
-
 
 export const getFoodById = async (id) => {
-  const response = await axios.get(`${API_BASE_URL}/foods/${id}`);
+  const response = await axiosInstance.get(`/foods/${id}`);
   return response.data;
 };
-
 
 export const getTopSellingFoods = async () => {
   try {
-    const response = await axios.get(`${API_BASE_URL}/top-foods`);
+    const response = await axiosInstance.get('/top-foods');
     return response.data;
   } catch (error) {
     console.error('Error fetching top-selling foods:', error.message);
@@ -26,48 +23,42 @@ export const getTopSellingFoods = async () => {
   }
 };
 
-
 export const getMyFoods = async (email) => {
-  const response = await axios.get(`${API_BASE_URL}/my-foods`, {
+  const response = await axiosInstance.get('/my-foods', {
     headers: { email },
   });
   return response.data;
 };
-
 
 export const getMyOrders = async (email) => {
-  const response = await axios.get(`${API_BASE_URL}/my-orders`, {
+  const response = await axiosInstance.get('/my-orders', {
     headers: { email },
   });
   return response.data;
 };
-
 
 export const deleteOrder = async (id, email) => {
-  const response = await axios.delete(`${API_BASE_URL}/my-orders/${id}`, {
+  const response = await axiosInstance.delete(`/my-orders/${id}`, {
     headers: { email },
   });
   return response.data;
 };
 
-
 export const addFood = async (foodData) => {
-  const response = await axios.post(`${API_BASE_URL}/add-food`, foodData);
+  const response = await axiosInstance.post('/add-food', foodData);
   return response.data;
 };
-
 
 export const updateFood = async (id, foodData, email) => {
   if (!id || id.length !== 24) {
     throw new Error('Invalid food ID');
   }
 
-  const response = await axios.put(`${API_BASE_URL}/update-food/${id}`, foodData, {
+  const response = await axiosInstance.put(`/update-food/${id}`, foodData, {
     headers: { email },
   });
   return response.data;
 };
-
 
 export const useFoods = (filters = {}) => {
   return useQuery({
