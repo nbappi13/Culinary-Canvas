@@ -1,19 +1,20 @@
-import React, { useState } from 'react';
-import { useAuth } from '../../context/AuthProvider';
-import { addFood } from '../../services/foodService';
-import Swal from 'sweetalert2';
-import '../../styles/AddFood.css';
+import React, { useState } from "react";
+import { useAuth } from "../../context/AuthProvider";
+import { useAddFood } from "../../services/foodService";
+import Swal from "sweetalert2";
+import "../../styles/AddFood.css";
 
 const AddFood = () => {
   const { currentUser } = useAuth();
+  const addFoodMutation = useAddFood();
   const [formData, setFormData] = useState({
-    name: '',
-    image: '',
-    category: '',
+    name: "",
+    image: "",
+    category: "",
     quantity: 0,
     price: 0.0,
-    origin: '',
-    description: '',
+    origin: "",
+    description: "",
   });
 
   const handleChange = (e) => {
@@ -30,30 +31,29 @@ const AddFood = () => {
     };
 
     try {
-      await addFood(newFood);
+      await addFoodMutation.mutateAsync(newFood);
       Swal.fire({
-        title: 'Food added successfully!',
-        icon: 'success',
+        title: "Food added successfully!",
+        icon: "success",
         timer: 1500,
         showConfirmButton: false,
       });
 
-      
       setFormData({
-        name: '',
-        image: '',
-        category: '',
+        name: "",
+        image: "",
+        category: "",
         quantity: 0,
         price: 0.0,
-        origin: '',
-        description: '',
+        origin: "",
+        description: "",
       });
     } catch (error) {
-      console.error('Failed to add food:', error);
+      console.error("Failed to add food:", error);
       Swal.fire({
-        title: 'Failed to add food!',
-        text: error.message || 'An unexpected error occurred.',
-        icon: 'error',
+        title: "Failed to add food!",
+        text: error.message || "An unexpected error occurred.",
+        icon: "error",
       });
     }
   };
@@ -64,31 +64,72 @@ const AddFood = () => {
       <form onSubmit={handleSubmit} className="add-food-form">
         <label>
           Food Name:
-          <input type="text" name="name" value={formData.name} onChange={handleChange} required />
+          <input
+            type="text"
+            name="name"
+            value={formData.name}
+            onChange={handleChange}
+            required
+          />
         </label>
         <label>
           Food Image:
-          <input type="text" name="image" value={formData.image} onChange={handleChange} required />
+          <input
+            type="text"
+            name="image"
+            value={formData.image}
+            onChange={handleChange}
+            required
+          />
         </label>
         <label>
           Food Category:
-          <input type="text" name="category" value={formData.category} onChange={handleChange} required />
+          <input
+            type="text"
+            name="category"
+            value={formData.category}
+            onChange={handleChange}
+            required
+          />
         </label>
         <label>
           Quantity:
-          <input type="number" name="quantity" value={formData.quantity} onChange={handleChange} required />
+          <input
+            type="number"
+            name="quantity"
+            value={formData.quantity}
+            onChange={handleChange}
+            required
+          />
         </label>
         <label>
           Price:
-          <input type="number" name="price" value={formData.price} onChange={handleChange} required />
+          <input
+            type="number"
+            name="price"
+            value={formData.price}
+            onChange={handleChange}
+            required
+          />
         </label>
         <label>
           Food Origin (Country):
-          <input type="text" name="origin" value={formData.origin} onChange={handleChange} required />
+          <input
+            type="text"
+            name="origin"
+            value={formData.origin}
+            onChange={handleChange}
+            required
+          />
         </label>
         <label>
           Short Description:
-          <textarea name="description" value={formData.description} onChange={handleChange} required />
+          <textarea
+            name="description"
+            value={formData.description}
+            onChange={handleChange}
+            required
+          />
         </label>
         <button type="submit">Add Item</button>
       </form>

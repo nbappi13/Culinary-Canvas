@@ -1,38 +1,57 @@
 .my-orders-page {
-    padding: 20px;
-  }
-  
-  .my-orders-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-  }
-  
-  .my-orders-table th, .my-orders-table td {
-    border: 1px solid #ddd;
-    padding: 8px;
-  }
-  
-  .my-orders-table th {
-    background-color: #f2f2f2;
-    text-align: left;
-  }
-  
-  .my-orders-table img {
-    width: 50px;
-    height: 50px;
-    object-fit: cover;
-  }
-  
-  .my-orders-table button {
-    padding: 5px 10px;
-    background-color: #f44336;
-    color: white;
-    border: none;
-    cursor: pointer;
-  }
-  
-  .my-orders-table button:disabled {
-    background-color: #ccc;
-    cursor: not-allowed;
-  }
+  padding: 2rem;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.my-orders-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: var(--card-bg);
+  color: var(--text-color);
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.my-orders-table th,
+.my-orders-table td {
+  padding: 1rem;
+  border: 1px solid #ddd;
+}
+
+.my-orders-table th {
+  background-color: var(--navbar-bg);
+  color: var(--navbar-text);
+}
+
+.my-orders-table img {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+}
+
+.my-orders-table button {
+  background-color: var(--button-bg);
+  color: var(--button-text);
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.my-orders-table button:hover {
+  background-color: var(--button-hover-bg);
+}
+
+.my-orders-table button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.my-orders-table td[colspan="6"] {
+  text-align: center;
+  padding: 1rem;
+  font-size: 1.2rem;
+  color: #777;
+}

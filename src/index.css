@@ -12,7 +12,7 @@
   --button-bg: #007bff;
   --button-text: #ffffff;
   --button-hover-bg: #0056b3;
-  --subtitle-font: 'Cursive', sans-serif;
+  --subtitle-font: "Cursive", sans-serif;
 }
 
 [data-theme="dark"] {
@@ -105,4 +105,28 @@ body {
 .food-cards-container {
   display: grid;
   gap: 1rem;
+}
+
+.pagination-container button {
+  background-color: var(--button-bg);
+  color: var(--button-text);
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.pagination-container button:hover {
+  background-color: var(--button-hover-bg);
+}
+
+.pagination-container button.bg-blue-500 {
+  background-color: var(--button-bg);
+  color: var(--button-text);
+}
+
+.pagination-container button.bg-gray-200 {
+  background-color: var(--card-bg);
+  color: var(--card-text);
 }
