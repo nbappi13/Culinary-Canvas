@@ -34,7 +34,14 @@ const Navbar = () => {
   };
 
   return (
-    <div className="navbar bg-base-100">
+    <div
+      className="navbar"
+      style={{
+        backgroundColor: theme === "dark" ? "#1f2937" : "#4f46e5", 
+        color: theme === "dark" ? "#f9fafb" : "#ffffff", 
+        transition: "background-color 0.3s, color 0.3s", 
+      }}
+    >
       <div className="navbar-start">
         <div className="dropdown">
           <label tabIndex={0} className="btn btn-ghost lg:hidden">
@@ -55,20 +62,34 @@ const Navbar = () => {
           </label>
           <ul
             tabIndex={0}
-            className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
+            className="menu menu-sm dropdown-content rounded-box z-[1] mt-3 w-52 p-2 shadow"
+            style={{
+              backgroundColor: theme === "dark" ? "#374151" : "#ffffff", 
+              color: theme === "dark" ? "#f9fafb" : "#000000", 
+            }}
           >
             <li>
-              <Link to="/">Home</Link>
+              <Link to="/" style={{ color: "inherit" }}>
+                Home
+              </Link>
             </li>
             <li>
-              <Link to="/all-foods">All Foods</Link>
+              <Link to="/all-foods" style={{ color: "inherit" }}>
+                All Foods
+              </Link>
             </li>
             <li>
-              <Link to="/gallery">Gallery</Link>
+              <Link to="/gallery" style={{ color: "inherit" }}>
+                Gallery
+              </Link>
             </li>
           </ul>
         </div>
-        <Link to="/" className="flex items-center space-x-2 text-xl font-bold">
+        <Link
+          to="/"
+          className="flex items-center space-x-2 text-xl font-bold"
+          style={{ color: "inherit" }}
+        >
           <img
             src={restaurant_logo}
             alt="Logo"
@@ -81,13 +102,19 @@ const Navbar = () => {
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">
           <li>
-            <Link to="/">Home</Link>
+            <Link to="/" style={{ color: "inherit" }}>
+              Home
+            </Link>
           </li>
           <li>
-            <Link to="/all-foods">All Foods</Link>
+            <Link to="/all-foods" style={{ color: "inherit" }}>
+              All Foods
+            </Link>
           </li>
           <li>
-            <Link to="/gallery">Gallery</Link>
+            <Link to="/gallery" style={{ color: "inherit" }}>
+              Gallery
+            </Link>
           </li>
         </ul>
       </div>
@@ -133,24 +160,35 @@ const Navbar = () => {
             {dropdownOpen && (
               <ul
                 tabIndex={0}
-                className="mt-3 p-2 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52"
+                className="mt-3 p-2 shadow menu menu-compact dropdown-content rounded-box w-52"
+                style={{
+                  backgroundColor: theme === "dark" ? "#374151" : "#ffffff",
+                  color: theme === "dark" ? "#f9fafb" : "#000000",
+                }}
               >
                 <li className="font-bold text-center">
                   {currentUser.displayName || "User"}
                 </li>
                 <li>
-                  <Link to="/my-foods">My Foods</Link>
+                  <Link to="/my-foods" style={{ color: "inherit" }}>
+                    My Foods
+                  </Link>
                 </li>
                 <li>
-                  <Link to="/add-food">Add Food</Link>
+                  <Link to="/add-food" style={{ color: "inherit" }}>
+                    Add Food
+                  </Link>
                 </li>
                 <li>
-                  <Link to="/my-orders">My Orders</Link>
+                  <Link to="/my-orders" style={{ color: "inherit" }}>
+                    My Orders
+                  </Link>
                 </li>
                 <li>
                   <button
                     onClick={handleLogout}
                     className="btn btn-error w-full"
+                    style={{ color: "inherit" }}
                   >
                     Logout
                   </button>
