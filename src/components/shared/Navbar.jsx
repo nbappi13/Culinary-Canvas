@@ -37,9 +37,9 @@ const Navbar = () => {
     <div
       className="navbar"
       style={{
-        backgroundColor: theme === "dark" ? "#1f2937" : "#4f46e5", 
-        color: theme === "dark" ? "#f9fafb" : "#ffffff", 
-        transition: "background-color 0.3s, color 0.3s", 
+        backgroundColor: theme === "dark" ? "#1f2937" : "#4f46e5",
+        color: theme === "dark" ? "#f9fafb" : "#ffffff",
+        transition: "background-color 0.3s, color 0.3s",
       }}
     >
       <div className="navbar-start">
@@ -64,8 +64,8 @@ const Navbar = () => {
             tabIndex={0}
             className="menu menu-sm dropdown-content rounded-box z-[1] mt-3 w-52 p-2 shadow"
             style={{
-              backgroundColor: theme === "dark" ? "#374151" : "#ffffff", 
-              color: theme === "dark" ? "#f9fafb" : "#000000", 
+              backgroundColor: theme === "dark" ? "#374151" : "#ffffff",
+              color: theme === "dark" ? "#f9fafb" : "#000000",
             }}
           >
             <li>
@@ -164,6 +164,8 @@ const Navbar = () => {
                 style={{
                   backgroundColor: theme === "dark" ? "#374151" : "#ffffff",
                   color: theme === "dark" ? "#f9fafb" : "#000000",
+                  zIndex: 1000, 
+                  position: "absolute", 
                 }}
               >
                 <li className="font-bold text-center">
