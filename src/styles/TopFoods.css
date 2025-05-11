@@ -1,9 +1,10 @@
 .top-foods-container {
   padding: 2rem 1rem;
-  background-color: var(--bg-color);
+  background-color: #f7f9fc; 
   color: var(--text-color);
   position: relative;
   overflow: hidden;
+  border-radius: 10px; 
 }
 
 .top-foods-title {
@@ -25,7 +26,6 @@
   background: linear-gradient(90deg, var(--button-bg), var(--button-hover-bg));
   border-radius: 2px;
 }
-
 
 .loading-container,
 .error-container {
@@ -58,7 +58,6 @@
   padding: 1.5rem;
 }
 
-
 .responsive-cascade-layout {
   display: flex;
   flex-direction: column;
@@ -79,13 +78,11 @@
   z-index: 10;
 }
 
-
 @media (min-width: 320px) {
   .responsive-cascade-layout {
     max-width: 90%;
   }
 }
-
 
 @media (min-width: 576px) {
   .top-foods-container {
@@ -96,7 +93,6 @@
     max-width: 500px;
   }
 }
-
 
 @media (min-width: 768px) {
   .top-foods-container {
@@ -116,7 +112,6 @@
     position: relative;
   }
 
-
   .card-position-1 {
     transform: translateY(0);
   }
@@ -124,7 +119,6 @@
   .card-position-2 {
     transform: translateY(60px);
   }
-
 
   .card-position-3 {
     transform: translateY(0);
@@ -134,13 +128,11 @@
     transform: translateY(60px);
   }
 
- 
   .card-position-5,
   .card-position-6 {
     display: none;
   }
 }
-
 
 @media (min-width: 992px) {
   .top-foods-container {
@@ -157,7 +149,6 @@
     max-width: 950px;
   }
 
-  
   .card-position-1 {
     transform: translateY(0);
   }
@@ -170,7 +161,6 @@
     transform: translateY(120px);
   }
 
-  
   .card-position-4 {
     transform: translateY(0);
   }
@@ -184,12 +174,10 @@
     display: none;
   }
 
-
   .card-position-5 {
     display: block;
   }
 }
-
 
 @media (min-width: 1200px) {
   .top-foods-container {
@@ -207,7 +195,6 @@
     max-width: 1140px;
   }
 
-
   .card-position-1 {
     transform: translateY(0);
   }
@@ -219,7 +206,6 @@
   .card-position-3 {
     transform: translateY(120px);
   }
-
 
   .card-position-4 {
     transform: translateY(0);
@@ -238,12 +224,10 @@
   }
 }
 
-
 @media (min-width: 1400px) {
   .responsive-cascade-layout {
     max-width: 1320px;
   }
-
 
   .card-position-1 {
     transform: translateY(0);
@@ -257,7 +241,6 @@
     transform: translateY(120px);
   }
 
- 
   .card-position-4 {
     transform: translateY(0);
     margin-top: 50px;
@@ -273,7 +256,6 @@
     margin-top: 50px;
   }
 }
-
 
 @media (max-width: 575.98px) {
   .hide-on-small {

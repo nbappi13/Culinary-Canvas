@@ -1,13 +1,12 @@
 .events-section {
   padding: 5rem 2rem;
-  background-color: var(--bg-color);
+  background-color: #f7f9fc; 
   color: var(--text-color);
 }
 
-
 @media (max-width: 575.98px) {
   .events-section {
-    padding: 2rem 1rem; 
+    padding: 2rem 1rem;
   }
 }
 
