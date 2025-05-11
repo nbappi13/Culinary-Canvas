@@ -88,7 +88,7 @@ const Navbar = () => {
                 Events
               </Link>
             </li>
-            // Add this link to both the desktop and mobile navigation menus
+          
             <li className={isActive("/contact") ? "active" : ""}>
               <Link to="/contact" style={{ color: "inherit" }}>
                 Contact
@@ -129,7 +129,11 @@ const Navbar = () => {
               Events
             </Link>
           </li>
-          {/* -------- */}
+          <li className={isActive("/reviews") ? "active" : ""}>
+            <Link to="/reviews" style={{ color: "inherit" }}>
+              Reviews
+            </Link>
+          </li>
           <li className={isActive("/gallery") ? "active" : ""}>
             <Link to="/gallery" style={{ color: "inherit" }}>
               Gallery

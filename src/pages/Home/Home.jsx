@@ -4,6 +4,7 @@ import TopFoods from '../../components/TopFoods';
 import OurStory from '../../components/OurStory/OurStory';
 import PrivateDining from '../../components/PrivateDining/PrivateDining'; 
 import Events from '../../components/Events/Events';
+import CustomerReviews from '../../components/CustomerReviews/CustomerReviews';
 
 
 const Home = () => {
@@ -13,7 +14,7 @@ const Home = () => {
       <TopFoods />
       <PrivateDining /> 
       <Events></Events>
-      {/* --- */}
+      <CustomerReviews />
       <OurStory />
     </div>
   );
