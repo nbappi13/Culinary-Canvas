@@ -13,6 +13,8 @@ import AddFood from "../pages/AddFood/AddFood";
 import MyOrders from "../pages/MyOrders/MyOrders";
 import PrivateRoute from "./PrivateRoute";
 import ErrorPage from "../pages/ErrorPage/ErrorPage";
+import Events from "../components/Events/Events";
+import Contact from "../pages/Contact/Contact";
 
 const router = createBrowserRouter([
   {
@@ -41,6 +43,9 @@ const router = createBrowserRouter([
         ),
       },
       { path: "/gallery", element: <Gallery /> },
+      { path: "/events", element: <Events /> },
+      // ---------
+      { path: "/contact", element: <Contact /> },
       {
         path: "/my-foods",
         element: (
