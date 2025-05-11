@@ -1,27 +1,62 @@
-import React, { useState } from 'react';
-import restaurantLogo from '../../assets/restaurant_logo.png';
-import '../../styles/OurStory.css';
+import React, { useState } from "react";
+import "../../styles/OurStory.css";
 
 const OurStory = () => {
   const [expanded, setExpanded] = useState(false);
 
-  const handleReadMore = () => {
+  const handleToggle = () => {
     setExpanded(!expanded);
   };
 
   return (
     <div className="our-story-container">
-      <h2 className="our-story-title">Our Story</h2>
-      <div className="our-story-content">
-        <img src={restaurantLogo} alt="Our Restaurant" className="our-story-image" />
-        <div className={`our-story-text ${expanded ? 'expanded' : 'collapsed'}`}>
-          <p>Welcome to Culinary Canvas, where we bring you the finest culinary experiences. Our journey began in 2024 with a passion for creating delicious and memorable meals. Our mission is to provide exceptional dining experiences with a focus on quality, flavor, and customer satisfaction.</p>
-          <p>At Culinary Canvas, we believe in using the freshest ingredients and innovative cooking techniques to craft dishes that delight the senses. Our team of talented chefs is dedicated to bringing you a diverse menu that celebrates both classic and contemporary cuisine.</p>
-          <p>Thank you for choosing Culinary Canvas. We look forward to serving you and making every visit a delightful experience.</p>
+      <div className="our-story-card">
+        <div className="our-story-title-wrapper">
+          <h2 className="our-story-title">Our Story, Mission & Responsibilities</h2>
         </div>
-        <button className="read-more-button" onClick={handleReadMore}>
-          {expanded ? 'Read Less' : 'Read More'}
-        </button>
+        <div className="our-story-content">
+          <div className="our-story-text-section">
+            <p className="our-story-paragraph">
+              Culinary Canvas began its journey in the early 1950s as a small
+              family-owned restaurant. With a passion for authentic flavors and
+              a commitment to quality, it quickly became a beloved spot for
+              locals. Over the decades, we have preserved our traditions while
+              embracing modern culinary techniques to bring you the best dining
+              experience.
+            </p>
+            {expanded && (
+              <>
+                <h3 className="our-story-subtitle">Our Mission</h3>
+                <p className="our-story-paragraph">
+                  Our mission is to celebrate the art of cooking by blending
+                  tradition with innovation. We aim to create dishes that not
+                  only satisfy your taste buds but also tell a story of heritage
+                  and passion.
+                </p>
+
+                <h3 className="our-story-subtitle">Our Responsibilities</h3>
+                <p className="our-story-paragraph">
+                  At Culinary Canvas, we are committed to sustainability,
+                  supporting local farmers, and providing a welcoming space for
+                  our community. Every dish we serve reflects our dedication to
+                  these values.
+                </p>
+              </>
+            )}
+            <button className="read-more-button" onClick={handleToggle}>
+              {expanded ? "Read Less" : "Read More"}
+            </button>
+          </div>
+          {expanded && (
+            <div className="our-story-image-section">
+              <img
+                src="https://i.imgur.com/dFpQvn8.png" 
+                alt="Old Restaurant"
+                className="our-story-image"
+              />
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
