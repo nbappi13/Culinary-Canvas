@@ -1,55 +1,69 @@
-import React from 'react';
-import { useQuery } from '@tanstack/react-query';
-import { getTopSellingFoods } from '../services/foodService'; 
-import FoodCard from './FoodCard';
-import { useNavigate } from 'react-router-dom';
-import '../styles/TopFoods.css';
+"use client"
+import { useQuery } from "@tanstack/react-query"
+import { getTopSellingFoods } from "../services/foodService"
+import FoodCard from "./FoodCard"
+import { useNavigate } from "react-router-dom"
+import "../styles/TopFoods.css"
 
 const TopFoods = () => {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
-  
-  const { data: topFoods, isLoading, isError } = useQuery({
-    queryKey: ['top-foods'],
+  const {
+    data: topFoods,
+    isLoading,
+    isError,
+  } = useQuery({
+    queryKey: ["top-foods"],
     queryFn: getTopSellingFoods,
-  });
+  })
 
- 
   const handleSeeAll = () => {
-    navigate('/all-foods');
-  };
+    navigate("/all-foods")
+  }
 
   return (
     <div className="top-foods-container">
       <h2 className="top-foods-title">Top Foods</h2>
 
-     
-      {isLoading && <p>Loading top foods...</p>}
+      {isLoading && (
+        <div className="loading-container">
+          <div className="loading-spinner"></div>
+          <p>Loading top foods...</p>
+        </div>
+      )}
 
-    
-      {isError && <p>Error loading top foods. Please try again later.</p>}
+      {isError && (
+        <div className="error-container">
+          <p>Error loading top foods. Please try again later.</p>
+        </div>
+      )}
 
-    
       {!isLoading && !isError && (
         <>
-          <div className="top-foods-grid">
-            {topFoods.length > 0 ? (
-              topFoods.map((food) => (
-                <FoodCard key={food._id} food={food} />
-              ))
-            ) : (
-              <p>No top foods available.</p>
-            )}
-          </div>
+          {topFoods && topFoods.length > 0 ? (
+            <div className="responsive-cascade-layout">
+              {topFoods.slice(0, 6).map((food, index) => (
+                <div
+                  key={food._id}
+                  className={`card-wrapper card-position-${index + 1} ${
+                    index >= 3 ? "hide-on-small" : ""
+                  }`}
+                >
+                  <FoodCard food={food} />
+                </div>
+              ))}
+            </div>
+          ) : (
+            <p className="no-foods">No top foods available.</p>
+          )}
 
-       
           <button onClick={handleSeeAll} className="see-all-button">
             See All
           </button>
         </>
       )}
     </div>
-  );
-};
+  )
+}
 
-export default TopFoods;
+export default TopFoods
