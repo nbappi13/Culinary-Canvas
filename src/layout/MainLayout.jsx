@@ -1,16 +1,29 @@
-import React from 'react';
-import { Outlet } from 'react-router-dom';
-import Navbar from '../components/shared/Navbar';
-import Footer from '../components/shared/Footer';
+import React from "react";
+import { Outlet } from "react-router-dom";
+import Navbar from "../components/shared/Navbar";
+import Footer from "../components/shared/Footer";
+import { useTheme } from "../context/ThemeProvider"; 
 
 const MainLayout = () => {
+  const { theme } = useTheme(); 
+
   return (
-    <div className="max-w-7xl mx-auto min-h-screen bg-gray-50">
-      <Navbar />
-      <main className="p-4">
-        <Outlet />
-      </main>
-      <Footer />
+    <div
+      className={`min-h-screen ${
+        theme === "dark" ? "dark-mode" : "light-mode"
+      }`}
+    >
+      <div className="w-full">
+        <Navbar />
+      </div>
+      <div className="max-w-7xl mx-auto">
+        <main className="p-4">
+          <Outlet />
+        </main>
+      </div>
+      <div className="w-full">
+        <Footer />
+      </div>
     </div>
   );
 };

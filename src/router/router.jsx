@@ -16,6 +16,8 @@ import ErrorPage from "../pages/ErrorPage/ErrorPage";
 import Events from "../components/Events/Events";
 import Contact from "../pages/Contact/Contact";
 import CustomerReviews from "../components/CustomerReviews/CustomerReviews";
+import Blog from "../pages/Blog/Blog";
+import TermsOfUse from "../pages/TermsOfUse/TermsOfUse";
 
 const router = createBrowserRouter([
   {
@@ -47,6 +49,8 @@ const router = createBrowserRouter([
       { path: "/events", element: <Events /> },
       {path: "/reviews", element: <CustomerReviews />},
       { path: "/contact", element: <Contact /> },
+      {path: "/blog", element: <Blog />},
+      {path: "/terms-of-use", element: <TermsOfUse />},
       {
         path: "/my-foods",
         element: (

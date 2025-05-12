@@ -1,6 +1,6 @@
 .reviews-section {
   padding: 2rem 1rem;
-  background-color: #f7f9fc;
+  background-color: var(--bg-color); 
   color: var(--text-color);
   position: relative;
 }
@@ -170,7 +170,6 @@
   right: -30px;
 }
 
-
 @media (max-width: 1024px) {
   .review-avatar {
     width: 80px;
@@ -226,4 +225,27 @@
   .review-text {
     text-align: center;
   }
+}
+
+
+.reviews-section.light-mode,
+.reviews-section.dark-mode {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.review-card {
+  background-color: var(--card-bg);
+  color: var(--text-color);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.review-nav {
+  background-color: var(--button-bg);
+  color: var(--button-text);
+}
+
+.review-nav:hover {
+  background-color: var(--button-hover-bg);
 }
