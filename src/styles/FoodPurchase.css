@@ -1,80 +1,229 @@
 .food-purchase-container {
-    display: flex;
-    justify-content: center;
-    padding: 2rem;
-    background-color: var(--bg-color);
-    color: var(--text-color);
-  }
-  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  width: 100%;
+}
+
+.purchase-form {
+  display: flex;
+  max-width: 800px;
+  width: 100%;
+  background-color: var(--card-bg);
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 1.5rem;
+}
+
+.food-image-container {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  margin-right: 1.5rem;
+}
+
+.food-image {
+  max-width: 100%;
+  height: auto;
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+.food-details-container {
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+}
+
+.food-details-container p,
+.food-details-container div {
+  margin-bottom: 0.75rem;
+}
+
+.quantity-input label {
+  display: block;
+  margin-bottom: 0.25rem;
+}
+
+.quantity-input input {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.purchase-button {
+  background-color: var(--button-bg);
+  color: var(--button-text);
+  padding: 0.75rem 1.25rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  font-weight: bold;
+  margin-top: 1rem;
+  width: auto;
+}
+
+.purchase-button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.purchase-button:hover:not(:disabled) {
+  background-color: var(--button-hover-bg);
+}
+
+.error-message {
+  color: red;
+  font-weight: bold;
+}
+
+
+@media (min-width: 1200px) {
   .purchase-form {
-    display: flex;
-    max-width: 800px;
-    width: 100%;
-    background-color: var(--card-bg);
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    padding: 1rem;
+    flex-direction: row;
   }
-  
+
   .food-image-container {
-    flex: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-right: 1rem;
+    max-width: 300px;
   }
-  
+
+  .food-image {
+    max-width: 250px;
+  }
+}
+
+
+@media (min-width: 992px) and (max-width: 1199px) {
+  .purchase-form {
+    flex-direction: row;
+    max-width: 90%;
+    padding: 1.25rem;
+  }
+
+  .food-image-container {
+    max-width: 250px;
+    margin-right: 1.25rem;
+  }
+
   .food-image {
     max-width: 200px;
-    width: 100%;
-    height: auto;
-    border-radius: 10px;
   }
-  
-  .food-details-container {
-    flex: 2;
-    display: flex;
+
+  .food-purchase-container {
+    padding: 1.5rem;
+  }
+}
+
+
+@media (min-width: 768px) and (max-width: 991px) {
+  .purchase-form {
     flex-direction: column;
+    max-width: 90%;
+    padding: 1rem;
   }
-  
-  .food-details-container p, .food-details-container div {
-    margin-bottom: 0.5rem;
-  }
-  
-  .quantity-input label {
-    display: block;
-  }
-  
-  .quantity-input input {
+
+  .food-image-container {
+    margin-right: 0;
+    margin-bottom: 1.5rem;
     width: 100%;
-    padding: 0.5rem;
-    margin-top: 0.5rem;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+    max-width: 100%;
+    justify-content: center;
   }
-  
+
+  .food-image {
+    max-width: 250px;
+  }
+
+  .food-details-container {
+    width: 100%;
+  }
+
+  .food-purchase-container {
+    padding: 1rem;
+  }
+
   .purchase-button {
-    background-color: var(--button-bg);
-    color: var(--button-text);
-    padding: 0.5rem 1rem;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.2s;
-    align-self: center;
-    margin-top: 1rem;
+    align-self: flex-start;
   }
-  
-  .purchase-button:disabled {
-    background-color: #ccc;
-    cursor: not-allowed;
+}
+
+
+@media (min-width: 576px) and (max-width: 767px) {
+  .purchase-form {
+    flex-direction: column;
+    max-width: 95%;
+    padding: 1rem;
   }
-  
-  .purchase-button:hover:not(:disabled) {
-    background-color: var(--button-hover-bg);
+
+  .food-image-container {
+    margin-right: 0;
+    margin-bottom: 1.25rem;
+    width: 100%;
+    justify-content: center;
   }
-  
-  .error-message {
-    color: red;
-    font-weight: bold;
+
+  .food-image {
+    max-width: 200px;
   }
+
+  .food-details-container {
+    width: 100%;
+  }
+
+  .food-purchase-container {
+    padding: 0.75rem;
+  }
+
+  .purchase-button {
+    width: 100%;
+  }
+}
+
+
+@media (max-width: 575px) {
+  .purchase-form {
+    flex-direction: column;
+    padding: 0.75rem;
+    max-width: 100%;
+  }
+
+  .food-image-container {
+    margin-right: 0;
+    margin-bottom: 1rem;
+    width: 100%;
+    justify-content: center;
+  }
+
+  .food-image {
+    max-width: 180px;
+  }
+
+  .food-details-container {
+    width: 100%;
+  }
+
+  .food-purchase-container {
+    padding: 0.5rem;
+  }
+
+  .food-purchase-container h1 {
+    font-size: 1.5rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .purchase-button {
+    width: 100%;
+  }
+
+  .food-details-container p,
+  .food-details-container div {
+    margin-bottom: 0.5rem;
+    font-size: 0.95rem;
+  }
+}

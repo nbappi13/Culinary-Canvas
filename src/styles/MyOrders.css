@@ -55,3 +55,69 @@
   font-size: 1.2rem;
   color: #777;
 }
+
+
+@media (max-width: 1200px) {
+ 
+  .my-orders-page {
+    padding: 1.5rem;
+  }
+}
+
+@media (max-width: 992px) {
+ 
+  .my-orders-page {
+    padding: 1rem;
+  }
+
+  .my-orders-table th,
+  .my-orders-table td {
+    padding: 0.75rem;
+  }
+}
+
+@media (max-width: 768px) {
+
+  .my-orders-page {
+    padding: 0.75rem;
+  }
+
+  .my-orders-table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+
+  .my-orders-table th,
+  .my-orders-table td {
+    padding: 0.5rem;
+  }
+}
+
+@media (max-width: 576px) {
+ 
+  .my-orders-page {
+    padding: 0.5rem;
+  }
+
+  .my-orders-table th,
+  .my-orders-table td {
+    padding: 0.4rem;
+    font-size: 0.9rem;
+  }
+
+  .my-orders-table img {
+    width: 40px;
+    height: 40px;
+  }
+
+  .my-orders-table button {
+    padding: 0.3rem 0.6rem;
+    font-size: 0.9rem;
+  }
+
+  .my-orders-page h1 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+}

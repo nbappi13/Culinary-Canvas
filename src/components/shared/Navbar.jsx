@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useAuth } from "../../context/AuthProvider"
 import { Link, useLocation } from "react-router-dom"
 import Swal from "sweetalert2"
@@ -11,7 +11,22 @@ const Navbar = () => {
   const { currentUser, logout } = useAuth()
   const { theme, toggleTheme } = useTheme()
   const [dropdownOpen, setDropdownOpen] = useState(false)
+  const [isSmallScreen, setIsSmallScreen] = useState(false)
   const location = useLocation()
+
+
+  useEffect(() => {
+    const checkScreenSize = () => {
+      setIsSmallScreen(window.innerWidth <= 320)
+    }
+
+    checkScreenSize()
+    window.addEventListener("resize", checkScreenSize)
+
+    return () => {
+      window.removeEventListener("resize", checkScreenSize)
+    }
+  }, [])
 
   const handleLogout = async () => {
     try {
@@ -47,10 +62,10 @@ const Navbar = () => {
         backgroundColor: theme === "dark" ? "#1f2937" : "#4f46e5",
         color: theme === "dark" ? "#f9fafb" : "#ffffff",
         transition: "background-color 0.3s, color 0.3s",
-        position: "fixed", 
-        top: 0, 
+        position: "fixed",
+        top: 0,
         zIndex: 50,
-        width: "100%", 
+        width: "100%",
       }}
     >
       <div className="navbar-start">
@@ -143,8 +158,12 @@ const Navbar = () => {
         </ul>
       </div>
 
-      <div className="navbar-end flex items-center space-x-4">
-        <button onClick={toggleTheme} className="btn btn-ghost">
+      <div className="navbar-end flex items-center" style={isSmallScreen ? { gap: "0.25rem" } : { gap: "1rem" }}>
+        <button
+          onClick={toggleTheme}
+          className="btn btn-ghost"
+          style={isSmallScreen ? { padding: "0.25rem", minHeight: "unset", height: "auto" } : {}}
+        >
           {theme === "light" ? (
             <svg
               xmlns="http://www.w3.org/2000/svg"
