@@ -8,7 +8,7 @@ The purpose of this project is to create a user-friendly platform where users ca
 
 ## Live URL
 
-You can access the live site [here is](https://b10-a11-task.web.app/).
+You can access the live site [here is](https://culinary-canvas-kitchen.netlify.app/).
 
 ## Key Features
 
@@ -46,4 +46,63 @@ You can access the live site [here is](https://b10-a11-task.web.app/).
 - **Dotenv**: A module for loading environment variables from a `.env` file.
 - **Jsonwebtoken**: A library for generating and verifying JSON Web Tokens (JWT).
 - **Cookie-Parser**: A middleware for parsing cookies.
+
+
+### Getting Started
+⚙ Prerequisites
+
+- Node.js & npm installed
+
+- MongoDB Atlas account (or local MongoDB)
+
+- Firebase project for authentication
+
+- Git
+
+
+
+### Client Setup
+
+*** Clone the repo
+- git clone https://github.com/nbappi13/Culinary-Canvas.git
+- cd Culinary-Canvas
+
+*** Install dependencies
+- npm install
+
+*** Run the client
+- npm run dev
+
+
+
+### Server Setup
+
+*** Go to the server directory
+- cd server
+
+*** Install server dependencies
+- npm install
+
+*** Start the server
+- nodemon server.js
+
+
+### Usage
+*** As a User:
+- Visit the live link: Culinary Canvas
+
+- Register/Login using your email.
+
+- Browse available food items.
+
+- Add items to your cart and purchase.
+
+- View order history.
+
+*** As an Admin:
+- Login with admin credentials.
+
+- Add, update, or delete food items.
+
+- Manage inventory and sales records.
 
