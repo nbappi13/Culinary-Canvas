@@ -1,12 +1,14 @@
-"use client"
-import { useQuery } from "@tanstack/react-query"
-import { getTopSellingFoods } from "../services/foodService"
-import FoodCard from "./FoodCard"
-import { useNavigate } from "react-router-dom"
-import "../styles/TopFoods.css"
+"use client";
+import { useQuery } from "@tanstack/react-query";
+import { getTopSellingFoods } from "../services/foodService";
+import FoodCard from "./FoodCard";
+import { useNavigate } from "react-router-dom";
+import { useTheme } from "../context/ThemeProvider"; 
+import "../styles/TopFoods.css";
 
 const TopFoods = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+  const { theme } = useTheme(); 
 
   const {
     data: topFoods,
@@ -15,14 +17,18 @@ const TopFoods = () => {
   } = useQuery({
     queryKey: ["top-foods"],
     queryFn: getTopSellingFoods,
-  })
+  });
 
   const handleSeeAll = () => {
-    navigate("/all-foods")
-  }
+    navigate("/all-foods");
+  };
 
   return (
-    <div className="top-foods-container">
+    <div
+      className={`top-foods-container ${
+        theme === "light" ? "light-top-foods-bg" : ""
+      }`} 
+    >
       <h2 className="top-foods-title">Top Foods</h2>
 
       {isLoading && (
@@ -63,7 +69,7 @@ const TopFoods = () => {
         </>
       )}
     </div>
-  )
-}
+  );
+};
 
-export default TopFoods
+export default TopFoods;

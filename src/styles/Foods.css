@@ -13,9 +13,16 @@
 
 .foods-container {
   padding: 2rem;
-  background-color: var(--bg-color); 
+  background-color: var(--bg-color);
   color: var(--text-color);
-  min-height: 100vh; 
+  min-height: 100vh;
+}
+
+.foods-container.light-foods-bg {
+  background-color: #f7f9fc; 
+  transition: background-color 0.3s ease; 
+  padding: 2rem; 
+  border-radius: 10px; 
 }
 
 .food-cards-container {

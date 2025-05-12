@@ -93,47 +93,53 @@ const UpdateFoodModal = ({ food, onSuccess, onClose }) => {
       className="update-food-modal"
       overlayClassName="update-food-overlay"
     >
-      <h2>Update Food</h2>
-      <form onSubmit={handleSubmit}>
-        <div className="form-group">
+      <div className="modal-content">
+        <h2>Update Food</h2>
+        <form onSubmit={handleSubmit}>
+          <div className="form-group">
+            <label>
+              Name:
+              <input type="text" name="name" value={formData.name} onChange={handleChange} disabled={isUpdating} />
+            </label>
+            <label>
+              Price:
+              <input type="number" name="price" value={formData.price} onChange={handleChange} disabled={isUpdating} />
+            </label>
+          </div>
+
+          <div className="form-group">
+            <label>
+              Quantity:
+              <input type="number" name="quantity" value={formData.quantity} onChange={handleChange} disabled={isUpdating} />
+            </label>
+            <label>
+              Category:
+              <input type="text" name="category" value={formData.category} onChange={handleChange} disabled={isUpdating} />
+            </label>
+          </div>
+
+          <div className="form-group">
+            <label>
+              Image URL:
+              <input type="text" name="image" value={formData.image} onChange={handleChange} disabled={isUpdating} />
+            </label>
+            <label>
+              Origin:
+              <input type="text" name="foodOrigin" value={formData.description.foodOrigin} onChange={handleChange} disabled={isUpdating} />
+            </label>
+          </div>
+
           <label>
-            Name:
-            <input type="text" name="name" value={formData.name} onChange={handleChange} disabled={isUpdating} />
+            Description:
+            <textarea name="shortDescription" value={formData.description.shortDescription} onChange={handleChange} disabled={isUpdating} />
           </label>
-          <label>
-            Price:
-            <input type="number" name="price" value={formData.price} onChange={handleChange} disabled={isUpdating} />
-          </label>
-        </div>
-        <div className="form-group">
-          <label>
-            Quantity:
-            <input type="number" name="quantity" value={formData.quantity} onChange={handleChange} disabled={isUpdating} />
-          </label>
-          <label>
-            Category:
-            <input type="text" name="category" value={formData.category} onChange={handleChange} disabled={isUpdating} />
-          </label>
-        </div>
-        <div className="form-group">
-          <label>
-            Image URL:
-            <input type="text" name="image" value={formData.image} onChange={handleChange} disabled={isUpdating} />
-          </label>
-          <label>
-            Origin:
-            <input type="text" name="foodOrigin" value={formData.description.foodOrigin} onChange={handleChange} disabled={isUpdating} />
-          </label>
-        </div>
-        <label>
-          Description:
-          <textarea name="shortDescription" value={formData.description.shortDescription} onChange={handleChange} disabled={isUpdating} />
-        </label>
-        <div className="modal-buttons">
-          <button type="submit" disabled={isUpdating}>{isUpdating ? 'Updating...' : 'Update'}</button>
-          <button type="button" onClick={onClose} disabled={isUpdating}>Close</button>
-        </div>
-      </form>
+
+          <div className="modal-footer">
+            <button type="submit" disabled={isUpdating}>{isUpdating ? 'Updating...' : 'Update'}</button>
+            <button type="button" onClick={onClose} disabled={isUpdating}>Close</button>
+          </div>
+        </form>
+      </div>
     </Modal>
   );
 };

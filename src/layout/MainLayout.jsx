@@ -1,22 +1,19 @@
-import React from "react";
-import { Outlet } from "react-router-dom";
-import Navbar from "../components/shared/Navbar";
-import Footer from "../components/shared/Footer";
-import { useTheme } from "../context/ThemeProvider"; 
+"use client"
+import { Outlet } from "react-router-dom"
+import Navbar from "../components/shared/Navbar"
+import Footer from "../components/shared/Footer"
+import { useTheme } from "../context/ThemeProvider"
 
 const MainLayout = () => {
-  const { theme } = useTheme(); 
+  const { theme } = useTheme()
 
   return (
-    <div
-      className={`min-h-screen ${
-        theme === "dark" ? "dark-mode" : "light-mode"
-      }`}
-    >
+    <div className={`min-h-screen ${theme === "dark" ? "dark-mode" : "light-mode"}`}>
       <div className="w-full">
         <Navbar />
       </div>
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-7xl mx-auto" style={{ paddingTop: "80px" }}>
+        
         <main className="p-4">
           <Outlet />
         </main>
@@ -25,7 +22,7 @@ const MainLayout = () => {
         <Footer />
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default MainLayout;
+export default MainLayout

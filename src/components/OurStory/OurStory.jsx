@@ -1,18 +1,24 @@
 import React, { useState } from "react";
+import { useTheme } from "../../context/ThemeProvider"; 
 import "../../styles/OurStory.css";
 
 const OurStory = () => {
   const [expanded, setExpanded] = useState(false);
+  const { theme } = useTheme(); 
 
   const handleToggle = () => {
     setExpanded(!expanded);
   };
 
   return (
-    <div className="our-story-container">
+    <div
+      className={`our-story-container ${
+        theme === "light" ? "light-our-story-bg" : ""
+      }`} 
+    >
       <div className="our-story-card">
         <div className="our-story-title-wrapper">
-          <h2 className="our-story-title">Our Story, Mission & Responsibilities</h2>
+          <h2 className="our-story-title">Our Story & Mission</h2>
         </div>
         <div className="our-story-content">
           <div className="our-story-text-section">
@@ -50,7 +56,7 @@ const OurStory = () => {
           {expanded && (
             <div className="our-story-image-section">
               <img
-                src="https://i.imgur.com/dFpQvn8.png" 
+                src="https://i.imgur.com/dFpQvn8.png"
                 alt="Old Restaurant"
                 className="our-story-image"
               />

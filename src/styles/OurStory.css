@@ -1,7 +1,7 @@
 .our-story-container {
   width: 100%;
   padding: 3rem 1rem;
-  background-color: var(--bg-color); 
+  background-color: var(--bg-color);
   color: var(--text-color);
   display: flex;
   justify-content: center;
@@ -20,7 +20,6 @@
   align-items: center;
   color: var(--text-color);
 }
-
 
 .our-story-title-wrapper {
   margin-bottom: 2rem;
@@ -92,6 +91,14 @@
 
 .read-more-button:hover {
   background-color: var(--button-hover-bg);
+}
+
+
+.light-our-story-bg {
+  background-color: #f7f9fc; 
+  transition: background-color 0.3s ease; 
+  padding: 2rem; 
+  border-radius: 10px; 
 }
 
 [data-theme="dark"] {

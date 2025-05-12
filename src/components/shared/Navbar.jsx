@@ -1,44 +1,44 @@
-"use client";
+"use client"
 
-import { useState } from "react";
-import { useAuth } from "../../context/AuthProvider";
-import { Link, useLocation } from "react-router-dom";
-import Swal from "sweetalert2";
-import { useTheme } from "../../context/ThemeProvider";
-import restaurant_logo from "../../assets/restaurant_logo.png";
+import { useState } from "react"
+import { useAuth } from "../../context/AuthProvider"
+import { Link, useLocation } from "react-router-dom"
+import Swal from "sweetalert2"
+import { useTheme } from "../../context/ThemeProvider"
+import restaurant_logo from "../../assets/restaurant_logo.png"
 
 const Navbar = () => {
-  const { currentUser, logout } = useAuth();
-  const { theme, toggleTheme } = useTheme();
-  const [dropdownOpen, setDropdownOpen] = useState(false);
-  const location = useLocation();
+  const { currentUser, logout } = useAuth()
+  const { theme, toggleTheme } = useTheme()
+  const [dropdownOpen, setDropdownOpen] = useState(false)
+  const location = useLocation()
 
   const handleLogout = async () => {
     try {
-      await logout();
+      await logout()
       Swal.fire({
         title: "Logout Successful!",
         icon: "success",
         timer: 1500,
         showConfirmButton: false,
-      });
+      })
     } catch (error) {
-      console.error("Logout error:", error);
+      console.error("Logout error:", error)
       Swal.fire({
         title: "Logout Failed!",
         text: "An error occurred while logging out.",
         icon: "error",
-      });
+      })
     }
-  };
+  }
 
   const toggleDropdown = () => {
-    setDropdownOpen(!dropdownOpen);
-  };
+    setDropdownOpen(!dropdownOpen)
+  }
 
   const isActive = (path) => {
-    return location.pathname === path;
-  };
+    return location.pathname === path
+  }
 
   return (
     <div
@@ -47,8 +47,10 @@ const Navbar = () => {
         backgroundColor: theme === "dark" ? "#1f2937" : "#4f46e5",
         color: theme === "dark" ? "#f9fafb" : "#ffffff",
         transition: "background-color 0.3s, color 0.3s",
-        position: "relative",
+        position: "fixed", 
+        top: 0, 
         zIndex: 50,
+        width: "100%", 
       }}
     >
       <div className="navbar-start">
@@ -61,12 +63,7 @@ const Navbar = () => {
               viewBox="0 0 24 24"
               stroke="currentColor"
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M4 6h16M4 12h8m-8 6h16"
-              />
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h8m-8 6h16" />
             </svg>
           </label>
           <ul
@@ -110,22 +107,14 @@ const Navbar = () => {
             </li>
           </ul>
         </div>
-        <Link
-          to="/"
-          className="flex items-center space-x-2 text-xl font-bold"
-          style={{ color: "inherit" }}
-        >
-          <img
-            src={restaurant_logo || "/placeholder.svg"}
-            alt="Logo"
-            className="h-14 w-14 rounded-full"
-          />
-          <span>Culinary Canvas</span>
+        <Link to="/" className="flex items-center space-x-2 text-xl font-bold" style={{ color: "inherit" }}>
+          <img src={restaurant_logo || "/placeholder.svg"} alt="Logo" className="h-14 w-14 rounded-full" />
+          <span className="text-2xl">Culinary Canvas</span>
         </Link>
       </div>
 
       <div className="navbar-center hidden lg:flex">
-        <ul className="menu menu-horizontal px-1">
+        <ul className="menu menu-horizontal px-1 text-1xl font-bold">
           <li className={isActive("/") ? "active" : ""}>
             <Link to="/" style={{ color: "inherit" }}>
               Home
@@ -178,18 +167,9 @@ const Navbar = () => {
         </button>
         {currentUser ? (
           <div className="dropdown dropdown-end">
-            <label
-              tabIndex={0}
-              className="btn btn-ghost btn-circle avatar"
-              onClick={toggleDropdown}
-            >
+            <label tabIndex={0} className="btn btn-ghost btn-circle avatar" onClick={toggleDropdown}>
               <div className="w-10 rounded-full">
-                <img
-                  src={
-                    currentUser.photoURL || "https://via.placeholder.com/150"
-                  }
-                  alt="Profile"
-                />
+                <img src={currentUser.photoURL || "https://via.placeholder.com/150"} alt="Profile" />
               </div>
             </label>
             {dropdownOpen && (
@@ -203,9 +183,7 @@ const Navbar = () => {
                   position: "absolute",
                 }}
               >
-                <li className="font-bold text-center">
-                  {currentUser.displayName || "User"}
-                </li>
+                <li className="font-bold text-center">{currentUser.displayName || "User"}</li>
                 <li>
                   <Link to="/my-foods" style={{ color: "inherit" }}>
                     My Foods
@@ -222,11 +200,7 @@ const Navbar = () => {
                   </Link>
                 </li>
                 <li>
-                  <button
-                    onClick={handleLogout}
-                    className="btn btn-error w-full"
-                    style={{ color: "inherit" }}
-                  >
+                  <button onClick={handleLogout} className="btn btn-error w-full" style={{ color: "inherit" }}>
                     Logout
                   </button>
                 </li>
@@ -240,7 +214,7 @@ const Navbar = () => {
         )}
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Navbar;
+export default Navbar

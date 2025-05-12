@@ -3,6 +3,7 @@ import FoodCard from "../../components/FoodCard";
 import { useFoods } from "../../services/foodService";
 import { PuffLoader } from "react-spinners";
 import { motion } from "framer-motion";
+import { useTheme } from "../../context/ThemeProvider"; 
 import "../../styles/Foods.css";
 
 const Foods = () => {
@@ -12,7 +13,14 @@ const Foods = () => {
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
   const inputRef = useRef(null);
 
-  const { data = { foodItems: [], totalPages: 1 }, isLoading, isError, error } = useFoods(filters, currentPage);
+  const { theme } = useTheme(); 
+
+  const {
+    data = { foodItems: [], totalPages: 1 },
+    isLoading,
+    isError,
+    error,
+  } = useFoods(filters, currentPage);
 
   useEffect(() => {
     const handler = setTimeout(() => {
@@ -82,7 +90,9 @@ const Foods = () => {
   const sortedFoodItems = getSortedFoodItems(data.foodItems);
 
   return (
-    <div className="foods-container">
+    <div
+      className={`foods-container ${theme === "light" ? "light-foods-bg" : ""}`} 
+    >
       <h1 className="text-center text-3xl font-bold mb-6">All Foods</h1>
 
       <div className="filters-container">

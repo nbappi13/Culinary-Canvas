@@ -1,14 +1,13 @@
 "use client";
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { useTheme } from "../../context/ThemeProvider"; 
 import "../../styles/CustomerReviews.css";
 
 const reviews = [
   {
     id: 1,
     name: "Sarah Johnson",
-    avatar: "https://imgur.com/zWneJuQ.jpg",
+    avatar: "https://imgur.com/zWneJuQ.jpg ",
     rating: 5,
     text: "The flavors were absolutely divine! Every bite was a new adventure. I can't wait to come back and try more dishes.",
     date: "October 15, 2023",
@@ -16,7 +15,7 @@ const reviews = [
   {
     id: 2,
     name: "Michael Chen",
-    avatar: "https://imgur.com/FPTDEwg.jpg",
+    avatar: "https://imgur.com/FPTDEwg.jpg ",
     rating: 5,
     text: "Impeccable service and atmosphere. The chef's special was a revelation - truly the best dining experience I've had this year.",
     date: "November 3, 2023",
@@ -24,7 +23,7 @@ const reviews = [
   {
     id: 3,
     name: "Emily Rodriguez",
-    avatar: "https://imgur.com/skBApK7.jpg",
+    avatar: "https://imgur.com/skBApK7.jpg ",
     rating: 4,
     text: "Perfect place for our anniversary dinner. The attention to detail in both food presentation and taste was remarkable.",
     date: "December 12, 2023",
@@ -32,7 +31,7 @@ const reviews = [
   {
     id: 4,
     name: "David Wilson",
-    avatar: "https://imgur.com/KvUvUM7.jpg",
+    avatar: "https://imgur.com/KvUvUM7.jpg ",
     rating: 5,
     text: "As a food critic, I rarely give perfect scores, but Culinary Canvas deserves nothing less. Their fusion dishes are innovative yet authentic.",
     date: "January 8, 2024",
@@ -40,7 +39,7 @@ const reviews = [
   {
     id: 5,
     name: "Sophia Patel",
-    avatar: "https://imgur.com/SecS239.jpg",
+    avatar: "https://imgur.com/SecS239.jpg ",
     rating: 5,
     text: "The dessert menu alone is worth the visit! Brought my family from out of town and they're still talking about the experience.",
     date: "February 20, 2024",
@@ -49,7 +48,6 @@ const reviews = [
 
 const CustomerReviews = () => {
   const [activeIndex, setActiveIndex] = useState(0);
-  const { theme } = useTheme(); 
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -60,11 +58,7 @@ const CustomerReviews = () => {
   }, []);
 
   return (
-    <section
-      className={`reviews-section ${
-        theme === "dark" ? "dark-mode" : "light-mode"
-      }`}
-    >
+    <section className="reviews-section">
       <div className="reviews-container">
         <h2 className="reviews-title">Customer Reviews</h2>
         <p className="reviews-subtitle">What our customers are saying...</p>
@@ -95,9 +89,7 @@ const CustomerReviews = () => {
                       {[...Array(5)].map((_, i) => (
                         <span
                           key={i}
-                          className={`star ${
-                            i < review.rating ? "filled" : ""
-                          }`}
+                          className={`star ${i < review.rating ? "filled" : ""}`}
                         >
                           ★
                         </span>
@@ -120,7 +112,7 @@ const CustomerReviews = () => {
                 className={`indicator ${activeIndex === index ? "active" : ""}`}
                 onClick={() => setActiveIndex(index)}
                 aria-label={`Go to review ${index + 1}`}
-              ></button>
+              />
             ))}
           </div>
 
