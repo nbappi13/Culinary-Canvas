@@ -14,6 +14,10 @@ const Navbar = () => {
   const [isSmallScreen, setIsSmallScreen] = useState(false)
   const location = useLocation()
 
+ 
+  useEffect(() => {
+    setDropdownOpen(false)
+  }, [location])
 
   useEffect(() => {
     const checkScreenSize = () => {
@@ -123,7 +127,12 @@ const Navbar = () => {
           </ul>
         </div>
         <Link to="/" className="flex items-center space-x-2 text-xl font-bold" style={{ color: "inherit" }}>
-          <img src={restaurant_logo || "/placeholder.svg"} alt="Logo" className="h-14 w-14 rounded-full" />
+          <img
+            src={restaurant_logo || "/placeholder.svg"}
+            alt="Logo"
+            className="h-14 w-14 rounded-full"
+            loading="lazy"
+          />
           <span className="text-2xl">Culinary Canvas</span>
         </Link>
       </div>
@@ -188,7 +197,7 @@ const Navbar = () => {
           <div className="dropdown dropdown-end">
             <label tabIndex={0} className="btn btn-ghost btn-circle avatar" onClick={toggleDropdown}>
               <div className="w-10 rounded-full">
-                <img src={currentUser.photoURL || "https://via.placeholder.com/150"} alt="Profile" />
+                <img src={currentUser.photoURL || "https://via.placeholder.com/150"} alt="Profile" loading="lazy" />
               </div>
             </label>
             {dropdownOpen && (
@@ -204,22 +213,29 @@ const Navbar = () => {
               >
                 <li className="font-bold text-center">{currentUser.displayName || "User"}</li>
                 <li>
-                  <Link to="/my-foods" style={{ color: "inherit" }}>
+                  <Link to="/my-foods" style={{ color: "inherit" }} onClick={() => setDropdownOpen(false)}>
                     My Foods
                   </Link>
                 </li>
                 <li>
-                  <Link to="/add-food" style={{ color: "inherit" }}>
+                  <Link to="/add-food" style={{ color: "inherit" }} onClick={() => setDropdownOpen(false)}>
                     Add Food
                   </Link>
                 </li>
                 <li>
-                  <Link to="/my-orders" style={{ color: "inherit" }}>
+                  <Link to="/my-orders" style={{ color: "inherit" }} onClick={() => setDropdownOpen(false)}>
                     My Orders
                   </Link>
                 </li>
                 <li>
-                  <button onClick={handleLogout} className="btn btn-error w-full" style={{ color: "inherit" }}>
+                  <button
+                    onClick={() => {
+                      setDropdownOpen(false)
+                      handleLogout()
+                    }}
+                    className="btn btn-error w-full"
+                    style={{ color: "inherit" }}
+                  >
                     Logout
                   </button>
                 </li>
