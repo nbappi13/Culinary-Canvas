@@ -1,109 +1,119 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import Lottie from "lottie-react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import lottieAnimation from "../../assets/lottie/animation.json";
-import image1 from "../../assets/slide/slider1.jpg";
-import image2 from "../../assets/slide/slider2.jpg";
-import image3 from "../../assets/slide/slider3.jpg";
-import image4 from "../../assets/slide/slider4.jpg";
-import image5 from "../../assets/slide/slider5.jpg";
-import "../../styles/Banner.css";
+import image1 from "../../assets/slide/slider1.webp";
+import image2 from "../../assets/slide/slider2.webp";
+import image3 from "../../assets/slide/slider3.webp";
+import image4 from "../../assets/slide/slider4.webp";
+import image5 from "../../assets/slide/slider5.webp";
 
 const images = [image1, image2, image3, image4, image5];
 
-const textVariants = {
-  hidden: { opacity: 0, y: -50 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      delay: 0.5,
-      duration: 1.5,
-      type: "spring",
-      stiffness: 50,
-    },
-  },
-};
-
-const waveVariants = {
-  animate: {
-    x: [0, 20, -20, 0],
-    transition: {
-      duration: 2,
-      ease: "easeInOut",
-      repeat: Number.POSITIVE_INFINITY,
-    },
-  },
-};
-
 const Banner = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [direction, setDirection] = useState(1); 
 
-  const nextSlide = () => {
-    setCurrentSlide((prev) => (prev === images.length - 1 ? 0 : prev + 1));
-  };
-
-  const prevSlide = () => {
-    setCurrentSlide((prev) => (prev === 0 ? images.length - 1 : prev - 1));
+  const paginate = (newDirection) => {
+    setDirection(newDirection);
+    const nextSlide = (currentSlide + newDirection + images.length) % images.length;
+    setCurrentSlide(nextSlide);
   };
 
  
-  useEffect(() => {
-    const interval = setInterval(() => {
-      nextSlide(); 
-    }, 5000); 
+  const transition = {
+    type: "spring",
+    stiffness: 250,
+    damping: 25,
+    mass: 0.5,
+    restDelta: 0.001,
+    bounce: 0,
+  };
 
-    return () => clearInterval(interval); 
-  }, []);
+  const variants = {
+    enter: (dir) => ({
+      x: dir === 1 ? "100%" : "-100%",
+    }),
+    center: {
+      x: 0,
+    },
+    exit: (dir) => ({
+      x: dir === 1 ? "-100%" : "100%",
+    }),
+  };
 
   return (
-    <div className="banner-container">
-      
-      <div className="slider-container">
-        <AnimatePresence mode="wait">
+    <div
+      className="relative w-full overflow-hidden"
+      style={{
+        height: "calc(100vh - 32px)",
+        willChange: "transform",
+        transformStyle: "preserve-3d",
+        backfaceVisibility: "hidden",
+      }}
+    >
+      <div className="relative w-full h-full">
+        <AnimatePresence custom={direction} mode="popLayout">
           <motion.div
             key={currentSlide}
-            className="slide"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.7 }}
-            style={{ backgroundImage: `url(${images[currentSlide]})` }}
+            custom={direction}
+            variants={variants}
+            initial="enter"
+            animate="center"
+            exit="exit"
+            transition={transition}
+            className="absolute inset-0 w-full h-full bg-no-repeat bg-cover bg-center"
+            style={{
+              backgroundImage: `url(${images[currentSlide]})`,
+              willChange: "transform, opacity",
+              transform: "translate3d(0,0,0)",
+            }}
           />
         </AnimatePresence>
-        <div className="slide-overlay"></div>
-      </div>
+
+       
+        <div className="absolute inset-0 bg-gradient-to-b from-black/30 to-black/30 z-10" />
 
      
-      <button className="slider-arrow slider-arrow-left" onClick={prevSlide}>
-        <ChevronLeft size={36} />
-      </button>
-      <button className="slider-arrow slider-arrow-right" onClick={nextSlide}>
-        <ChevronRight size={36} />
-      </button>
-
-    
-      <div className="banner-content-wrapper">
-        <motion.div
-          className="banner-text"
-          variants={textVariants}
-          initial="hidden"
-          animate="visible"
+        <button
+          className="absolute top-1/2 left-4 -translate-y-1/2 z-30 w-14 h-14 sm:w-16 sm:h-16 bg-white/10 rounded-full hover:bg-white/20 transition"
+          onClick={() => paginate(-1)}
         >
-          <motion.h1 variants={waveVariants} animate="animate">
+          <ChevronLeft size={32} className="text-white" />
+        </button>
+
+        <button
+          className="absolute top-1/2 right-4 -translate-y-1/2 z-30 w-14 h-14 sm:w-16 sm:h-16 bg-white/10 rounded-full hover:bg-white/20 transition"
+          onClick={() => paginate(1)}
+        >
+          <ChevronRight size={32} className="text-white" />
+        </button>
+
+      
+        <div className="absolute inset-0 flex flex-col items-center justify-center p-8 sm:p-12 text-center z-20">
+          <motion.h1
+            key={currentSlide + "-heading"}
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.9 }}
+            transition={{ duration: 0.5, ease: "easeOut" }}
+            className="text-white text-3xl sm:text-4xl lg:text-5xl font-bold mb-6"
+          >
             Welcome to Culinary Canvas
           </motion.h1>
-          <div className="lottie-text-container">
-            <Lottie
-              animationData={lottieAnimation}
-              className="lottie-animation"
-            />
-            <p className="banner-subtitle">Experience the best dining</p>
-          </div>
-        </motion.div>
+
+          <motion.p
+            key={currentSlide + "-subtext"}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 20 }}
+            transition={{ duration: 0.5, ease: "easeOut", delay: 0.1 }}
+            className="text-white text-base sm:text-lg lg:text-xl italic text-opacity-70"
+          >
+            Experience the best dining
+          </motion.p>
+        </div>
       </div>
     </div>
   );

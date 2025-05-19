@@ -1,28 +1,29 @@
-"use client"
-import { Outlet } from "react-router-dom"
-import Navbar from "../components/shared/Navbar"
-import Footer from "../components/shared/Footer"
-import { useTheme } from "../context/ThemeProvider"
+// MainLayout.jsx
+import { Outlet } from "react-router-dom";
+import Navbar from "../components/shared/Navbar";
+import Footer from "../components/shared/Footer";
+import { useTheme } from "../context/ThemeProvider";
+import Banner from "../components/Banner/Banner";
 
 const MainLayout = () => {
-  const { theme } = useTheme()
+  const { theme } = useTheme();
 
   return (
     <div className={`min-h-screen ${theme === "dark" ? "dark-mode" : "light-mode"}`}>
-      <div className="w-full">
-        <Navbar />
-      </div>
-      <div className="max-w-7xl mx-auto" style={{ paddingTop: "80px" }}>
-        
+      <Navbar /> 
+
+   
+      <Banner />
+
+      <div className="max-w-7xl mx-auto pt-20">
         <main className="p-4">
           <Outlet />
         </main>
       </div>
-      <div className="w-full">
-        <Footer />
-      </div>
-    </div>
-  )
-}
 
-export default MainLayout
+      <Footer />
+    </div>
+  );
+};
+
+export default MainLayout;
