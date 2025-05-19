@@ -12,7 +12,6 @@ const MyOrders = () => {
   const [isDeleting, setIsDeleting] = useState(false)
   const [isMobile, setIsMobile] = useState(false)
 
-
   useEffect(() => {
     const checkScreenSize = () => {
       setIsMobile(window.innerWidth < 576)
@@ -38,71 +37,39 @@ const MyOrders = () => {
     }
   }
 
-  
   if (isMobile) {
     return (
-      <div
-        className="my-orders-page"
-        style={{
-          padding: "1rem",
-          backgroundColor: "var(--bg-color)",
-          color: "var(--text-color)",
-          transition: "background-color 0.3s, color 0.3s",
-        }}
-      >
-        <h1 style={{ fontSize: "1.5rem", marginBottom: "1rem" }}>My Orders</h1>
+      <div className="p-4 bg-[var(--bg-color)] text-[var(--text-color)] transition-colors duration-300">
+        <h1 className="text-2xl mb-4">My Orders</h1>
 
         {orders?.length === 0 ? (
-          <div
-            style={{
-              textAlign: "center",
-              padding: "1rem",
-              fontSize: "1rem",
-              color: "#777",
-              backgroundColor: "var(--card-bg)",
-              borderRadius: "8px",
-              marginBottom: "1rem",
-            }}
-          >
+          <div className="text-center p-4 text-base text-gray-500 bg-[var(--card-bg)] rounded-lg mb-4">
             No orders found.
           </div>
         ) : (
           orders?.map((order) => (
             <div
               key={order._id}
-              style={{
-                backgroundColor: "var(--card-bg)",
-                color: "var(--text-color)",
-                border: "1px solid #ddd",
-                borderRadius: "8px",
-                padding: "1rem",
-                marginBottom: "1rem",
-                boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
-              }}
+              className="bg-[var(--card-bg)] text-[var(--text-color)] border border-gray-200 rounded-lg p-4 mb-4 shadow-sm"
             >
-              <div style={{ display: "flex", alignItems: "center", marginBottom: "0.5rem" }}>
+              <div className="flex items-center mb-2">
                 <img
                   src={order.foodDetails.image || "/placeholder.svg"}
                   alt={order.foodDetails.name}
-                  style={{
-                    width: "50px",
-                    height: "50px",
-                    objectFit: "cover",
-                    borderRadius: "4px",
-                    marginRight: "0.75rem",
-                  }}
+                  className="w-[50px] h-[50px] object-cover rounded mr-3"
+                  loading="lazy"
                 />
                 <div>
-                  <h3 style={{ margin: "0", fontSize: "1.1rem" }}>{order.foodDetails.name}</h3>
-                  <p style={{ margin: "0", fontSize: "1rem", fontWeight: "bold" }}>${order.price.toFixed(2)}</p>
+                  <h3 className="m-0 text-lg">{order.foodDetails.name}</h3>
+                  <p className="m-0 text-base font-bold">${order.price.toFixed(2)}</p>
                 </div>
               </div>
 
-              <div style={{ fontSize: "0.9rem", marginBottom: "0.5rem" }}>
-                <p style={{ margin: "0.25rem 0" }}>
+              <div className="text-sm mb-2">
+                <p className="my-1">
                   <strong>Buyer:</strong> {order.buyerName}
                 </p>
-                <p style={{ margin: "0.25rem 0" }}>
+                <p className="my-1">
                   <strong>Date:</strong> {moment(order.buyingDate).format("MMM Do YYYY")}
                 </p>
               </div>
@@ -110,17 +77,7 @@ const MyOrders = () => {
               <button
                 onClick={() => handleDelete(order._id)}
                 disabled={isDeleting}
-                style={{
-                  backgroundColor: "var(--button-bg)",
-                  color: "var(--button-text)",
-                  padding: "0.5rem 1rem",
-                  border: "none",
-                  borderRadius: "4px",
-                  cursor: "pointer",
-                  transition: "background-color 0.2s",
-                  width: "100%",
-                  marginTop: "0.5rem",
-                }}
+                className="bg-[var(--button-bg)] text-[var(--button-text)] py-2 px-4 border-none rounded cursor-pointer transition-colors duration-200 hover:bg-[var(--button-hover-bg)] w-full mt-2 disabled:bg-gray-400 disabled:cursor-not-allowed"
               >
                 Delete Order
               </button>
@@ -131,88 +88,29 @@ const MyOrders = () => {
     )
   }
 
-  
   return (
-    <div
-      className="my-orders-page"
-      style={{
-        padding: "2rem",
-        backgroundColor: "var(--bg-color)",
-        color: "var(--text-color)",
-        transition: "background-color 0.3s, color 0.3s",
-      }}
-    >
-      <h1>My Orders</h1>
-      <div style={{ overflowX: "auto", width: "100%" }}>
-        <table
-          style={{
-            width: "100%",
-            borderCollapse: "collapse",
-            backgroundColor: "var(--card-bg)",
-            color: "var(--text-color)",
-            transition: "background-color 0.3s, color 0.3s",
-          }}
-        >
+    <div className="p-8 md:p-6 sm:p-4 xs:p-2 bg-[var(--bg-color)] text-[var(--text-color)] transition-colors duration-300">
+      <h1 className="text-2xl mb-4 xs:text-xl">My Orders</h1>
+      <div className="overflow-x-auto w-full">
+        <table className="w-full border-collapse bg-[var(--card-bg)] text-[var(--text-color)] transition-colors duration-300">
           <thead>
             <tr>
-              <th
-                style={{
-                  padding: "1rem",
-                  border: "1px solid #ddd",
-                  backgroundColor: "var(--navbar-bg)",
-                  color: "var(--navbar-text)",
-                }}
-              >
+              <th className="p-4 lg:p-3 md:p-2 sm:p-2 xs:p-1.5 border border-gray-200 bg-[var(--navbar-bg)] text-[var(--navbar-text)]">
                 Image
               </th>
-              <th
-                style={{
-                  padding: "1rem",
-                  border: "1px solid #ddd",
-                  backgroundColor: "var(--navbar-bg)",
-                  color: "var(--navbar-text)",
-                }}
-              >
+              <th className="p-4 lg:p-3 md:p-2 sm:p-2 xs:p-1.5 border border-gray-200 bg-[var(--navbar-bg)] text-[var(--navbar-text)]">
                 Name
               </th>
-              <th
-                style={{
-                  padding: "1rem",
-                  border: "1px solid #ddd",
-                  backgroundColor: "var(--navbar-bg)",
-                  color: "var(--navbar-text)",
-                }}
-              >
+              <th className="p-4 lg:p-3 md:p-2 sm:p-2 xs:p-1.5 border border-gray-200 bg-[var(--navbar-bg)] text-[var(--navbar-text)]">
                 Price
               </th>
-              <th
-                style={{
-                  padding: "1rem",
-                  border: "1px solid #ddd",
-                  backgroundColor: "var(--navbar-bg)",
-                  color: "var(--navbar-text)",
-                }}
-              >
+              <th className="p-4 lg:p-3 md:p-2 sm:p-2 xs:p-1.5 border border-gray-200 bg-[var(--navbar-bg)] text-[var(--navbar-text)]">
                 Buyer Name
               </th>
-              <th
-                style={{
-                  padding: "1rem",
-                  border: "1px solid #ddd",
-                  backgroundColor: "var(--navbar-bg)",
-                  color: "var(--navbar-text)",
-                }}
-              >
+              <th className="p-4 lg:p-3 md:p-2 sm:p-2 xs:p-1.5 border border-gray-200 bg-[var(--navbar-bg)] text-[var(--navbar-text)]">
                 Buying Date
               </th>
-              <th
-                style={{
-                  padding: "1rem",
-                  border: "1px solid #ddd",
-                  backgroundColor: "var(--navbar-bg)",
-                  color: "var(--navbar-text)",
-                }}
-              >
+              <th className="p-4 lg:p-3 md:p-2 sm:p-2 xs:p-1.5 border border-gray-200 bg-[var(--navbar-bg)] text-[var(--navbar-text)]">
                 Actions
               </th>
             </tr>
@@ -220,48 +118,38 @@ const MyOrders = () => {
           <tbody>
             {orders?.length === 0 ? (
               <tr>
-                <td
-                  colSpan="6"
-                  style={{
-                    textAlign: "center",
-                    padding: "1rem",
-                    fontSize: "1.2rem",
-                    color: "#777",
-                    border: "1px solid #ddd",
-                  }}
-                >
+                <td colSpan="6" className="text-center p-4 text-lg text-gray-500 border border-gray-200">
                   No orders found.
                 </td>
               </tr>
             ) : (
               orders?.map((order) => (
                 <tr key={order._id}>
-                  <td style={{ padding: "1rem", border: "1px solid #ddd" }}>
+                  <td className="p-4 lg:p-3 md:p-2 sm:p-2 xs:p-1.5 border border-gray-200">
                     <img
                       src={order.foodDetails.image || "/placeholder.svg"}
                       alt={order.foodDetails.name}
-                      style={{ width: "50px", height: "50px", objectFit: "cover" }}
+                      className="w-[50px] h-[50px] object-cover sm:w-[40px] sm:h-[40px]"
+                      loading="lazy"
                     />
                   </td>
-                  <td style={{ padding: "1rem", border: "1px solid #ddd" }}>{order.foodDetails.name}</td>
-                  <td style={{ padding: "1rem", border: "1px solid #ddd" }}>${order.price.toFixed(2)}</td>
-                  <td style={{ padding: "1rem", border: "1px solid #ddd" }}>{order.buyerName}</td>
-                  <td style={{ padding: "1rem", border: "1px solid #ddd" }}>
+                  <td className="p-4 lg:p-3 md:p-2 sm:p-2 xs:p-1.5 border border-gray-200 sm:text-sm">
+                    {order.foodDetails.name}
+                  </td>
+                  <td className="p-4 lg:p-3 md:p-2 sm:p-2 xs:p-1.5 border border-gray-200 sm:text-sm">
+                    ${order.price.toFixed(2)}
+                  </td>
+                  <td className="p-4 lg:p-3 md:p-2 sm:p-2 xs:p-1.5 border border-gray-200 sm:text-sm">
+                    {order.buyerName}
+                  </td>
+                  <td className="p-4 lg:p-3 md:p-2 sm:p-2 xs:p-1.5 border border-gray-200 sm:text-sm">
                     {moment(order.buyingDate).format("MMMM Do YYYY, h:mm:ss a")}
                   </td>
-                  <td style={{ padding: "1rem", border: "1px solid #ddd" }}>
+                  <td className="p-4 lg:p-3 md:p-2 sm:p-2 xs:p-1.5 border border-gray-200">
                     <button
                       onClick={() => handleDelete(order._id)}
                       disabled={isDeleting}
-                      style={{
-                        backgroundColor: "var(--button-bg)",
-                        color: "var(--button-text)",
-                        padding: "0.5rem 1rem",
-                        border: "none",
-                        borderRadius: "4px",
-                        cursor: "pointer",
-                        transition: "background-color 0.2s",
-                      }}
+                      className="bg-[var(--button-bg)] text-[var(--button-text)] py-2 px-4 sm:py-1.5 sm:px-3 sm:text-sm border-none rounded cursor-pointer transition-colors duration-200 hover:bg-[var(--button-hover-bg)] disabled:bg-gray-400 disabled:cursor-not-allowed"
                     >
                       Delete
                     </button>

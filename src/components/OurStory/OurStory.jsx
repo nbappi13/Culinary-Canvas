@@ -58,6 +58,7 @@ const OurStory = () => {
               <img
                 src="https://i.imgur.com/dFpQvn8.png"
                 alt="Old Restaurant"
+                loading="lazy"
                 className="our-story-image"
               />
             </div>

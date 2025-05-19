@@ -55,7 +55,7 @@ const Events = () => {
   return (
     <section
       className={`py-20 px-4 ${
-        theme === "dark" ? "bg-gray-900 text-white" : "bg-gray-50 text-gray-800"
+        theme === "dark" ? "bg-gray-900 text-white" : "bg-zinc-200 text-gray-900"
       } transition-colors duration-300`}
     >
       <div className="max-w-6xl mx-auto">
