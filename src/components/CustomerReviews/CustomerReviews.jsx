@@ -1,7 +1,133 @@
 "use client";
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import "../../styles/CustomerReviews.css";
+import { useTheme } from "../../context/ThemeProvider"; 
+
+const CustomerReviews = () => {
+  const [activeIndex, setActiveIndex] = useState(0);
+  const { theme } = useTheme(); 
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActiveIndex((current) => (current + 1) % reviews.length);
+    }, 5000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <section
+      className={`py-16 px-4 ${
+        theme === "dark" ? "bg-gray-900 text-white" : "bg-gray-50 text-gray-800"
+      } transition-colors duration-300`}
+    >
+      <div className="max-w-6xl mx-auto">
+        <h2 className="text-4xl font-bold text-center mb-2">Customer Reviews</h2>
+        <p
+          className={`text-center text-lg max-w-xl mx-auto mb-10 ${
+            theme === "dark" ? "text-gray-300" : "text-gray-600"
+          }`}
+        >
+          What our customers are saying...
+        </p>
+
+        <div className="relative w-full max-w-5xl mx-auto overflow-hidden">
+          <motion.div
+            className="flex transition-transform duration-600 ease-in-out"
+            style={{ transform: `translateX(-${activeIndex * 100}%)` }}
+          >
+            {reviews.map((review) => (
+              <motion.div
+                key={review.id}
+                className={`w-full flex-shrink-0 p-6 md:p-8 ${
+                  theme === "dark" ? "bg-gray-800" : "bg-white"
+                } rounded-xl shadow-md`}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4 }}
+              >
+             
+                <div className="flex items-center gap-4 mb-4">
+                  <img
+                    src={review.avatar || "/placeholder.svg"}
+                    alt={review.name}
+                    loading="lazy"
+                    className="w-20 h-20 rounded-full object-cover border-4 border-blue-500"
+                  />
+                  <div className="flex flex-col">
+                    <h3 className="text-xl font-semibold">{review.name}</h3>
+                    <div className="flex gap-1 text-yellow-500 text-lg">
+                      {[...Array(5)].map((_, i) => (
+                        <span key={i}>{i < review.rating ? "★" : "☆"}</span>
+                      ))}
+                    </div>
+                    <p
+                      className={`text-sm ${
+                        theme === "dark" ? "text-gray-400" : "text-gray-500"
+                      }`}
+                    >
+                      {review.date}
+                    </p>
+                  </div>
+                </div>
+
+               
+                <div
+                  className={`italic ${
+                    theme === "dark" ? "text-gray-300" : "text-gray-700"
+                  }`}
+                >
+                  "{review.text}"
+                </div>
+              </motion.div>
+            ))}
+          </motion.div>
+
+         
+          <div className="flex justify-center mt-6 space-x-2">
+            {reviews.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => setActiveIndex(index)}
+                aria-label={`Go to review ${index + 1}`}
+                className={`w-3 h-3 rounded-full transition-all ${
+                  activeIndex === index
+                    ? "bg-blue-600 scale-125"
+                    : theme === "dark"
+                    ? "bg-gray-600"
+                    : "bg-gray-400"
+                }`}
+              ></button>
+            ))}
+          </div>
+
+         
+          <button
+            onClick={() =>
+              setActiveIndex(
+                (current) => (current - 1 + reviews.length) % reviews.length
+              )
+            }
+            aria-label="Previous review"
+            className="absolute top-1/2 left-0 transform -translate-y-1/2 bg-blue-600 text-white w-10 h-10 rounded-full flex items-center justify-center shadow hover:bg-blue-700 transition"
+          >
+            ‹
+          </button>
+          <button
+            onClick={() =>
+              setActiveIndex((current) => (current + 1) % reviews.length)
+            }
+            aria-label="Next review"
+            className="absolute top-1/2 right-0 transform -translate-y-1/2 bg-blue-600 text-white w-10 h-10 rounded-full flex items-center justify-center shadow hover:bg-blue-700 transition"
+          >
+            ›
+          </button>
+        </div>
+      </div>
+    </section>
+  );
+};
+
 
 const reviews = [
   {
@@ -45,101 +171,5 @@ const reviews = [
     date: "February 20, 2024",
   },
 ];
-
-const CustomerReviews = () => {
-  const [activeIndex, setActiveIndex] = useState(0);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setActiveIndex((current) => (current + 1) % reviews.length);
-    }, 5000);
-
-    return () => clearInterval(interval);
-  }, []);
-
-  return (
-    <section className="reviews-section">
-      <div className="reviews-container">
-        <h2 className="reviews-title">Customer Reviews</h2>
-        <p className="reviews-subtitle">What our customers are saying...</p>
-
-        <div className="reviews-carousel">
-          <motion.div
-            className="reviews-track"
-            animate={{ x: `calc(-${activeIndex * 100}%)` }}
-            transition={{ ease: "easeInOut", duration: 0.6 }}
-          >
-            {reviews.map((review) => (
-              <motion.div
-                className="review-card"
-                key={review.id}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4 }}
-              >
-                <div className="review-header">
-                  <img
-                    src={review.avatar || "/placeholder.svg"}
-                    alt={review.name}
-                    className="review-avatar"
-                  />
-                  <div className="review-meta">
-                    <h3 className="review-name">{review.name}</h3>
-                    <div className="review-rating">
-                      {[...Array(5)].map((_, i) => (
-                        <span
-                          key={i}
-                          className={`star ${i < review.rating ? "filled" : ""}`}
-                        >
-                          ★
-                        </span>
-                      ))}
-                    </div>
-                    <p className="review-date">{review.date}</p>
-                  </div>
-                </div>
-                <div className="review-content">
-                  <p className="review-text">"{review.text}"</p>
-                </div>
-              </motion.div>
-            ))}
-          </motion.div>
-
-          <div className="review-indicators">
-            {reviews.map((_, index) => (
-              <button
-                key={index}
-                className={`indicator ${activeIndex === index ? "active" : ""}`}
-                onClick={() => setActiveIndex(index)}
-                aria-label={`Go to review ${index + 1}`}
-              />
-            ))}
-          </div>
-
-          <button
-            className="review-nav prev"
-            onClick={() =>
-              setActiveIndex(
-                (current) => (current - 1 + reviews.length) % reviews.length
-              )
-            }
-            aria-label="Previous review"
-          >
-            ‹
-          </button>
-          <button
-            className="review-nav next"
-            onClick={() =>
-              setActiveIndex((current) => (current + 1) % reviews.length)
-            }
-            aria-label="Next review"
-          >
-            ›
-          </button>
-        </div>
-      </div>
-    </section>
-  );
-};
 
 export default CustomerReviews;
