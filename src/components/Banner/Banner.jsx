@@ -55,7 +55,7 @@ const Banner = () => {
     >
       <div className="relative w-full h-full">
         <AnimatePresence custom={direction} mode="popLayout">
-          <motion.div
+          <motion.img
             key={currentSlide}
             custom={direction}
             variants={variants}
@@ -63,19 +63,21 @@ const Banner = () => {
             animate="center"
             exit="exit"
             transition={transition}
-            className="absolute inset-0 w-full h-full bg-no-repeat bg-cover bg-center"
+            src={images[currentSlide]}
+            loading="lazy"
+            alt={`Slide ${currentSlide + 1}`}
+            className="absolute inset-0 w-full h-full object-cover object-center"
             style={{
-              backgroundImage: `url(${images[currentSlide]})`,
               willChange: "transform, opacity",
-              transform: "translate3d(0,0,0)",
+              transform: "translate3d(0,0,0)", 
             }}
           />
         </AnimatePresence>
 
-       
+      
         <div className="absolute inset-0 bg-gradient-to-b from-black/30 to-black/30 z-10" />
 
-     
+       
         <button
           className="absolute top-1/2 left-4 -translate-y-1/2 z-30 w-14 h-14 sm:w-16 sm:h-16 bg-white/10 rounded-full hover:bg-white/20 transition"
           onClick={() => paginate(-1)}

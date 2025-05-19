@@ -1,10 +1,11 @@
-import React, { useState, useEffect, useRef } from "react";
+"use client";
+
+import { useState, useEffect, useRef } from "react";
 import FoodCard from "../../components/FoodCard";
 import { useFoods } from "../../services/foodService";
 import { PuffLoader } from "react-spinners";
 import { motion } from "framer-motion";
-import { useTheme } from "../../context/ThemeProvider"; 
-import "../../styles/Foods.css";
+import { useTheme } from "../../context/ThemeProvider";
 
 const Foods = () => {
   const [filters, setFilters] = useState({});
@@ -13,7 +14,7 @@ const Foods = () => {
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
   const inputRef = useRef(null);
 
-  const { theme } = useTheme(); 
+  const { theme } = useTheme();
 
   const {
     data = { foodItems: [], totalPages: 1 },
@@ -77,26 +78,37 @@ const Foods = () => {
 
   if (isLoading) {
     return (
-      <div className="spinner-container">
+      <div className="flex items-center justify-center h-screen">
         <PuffLoader color="#36D7B7" size={150} />
       </div>
     );
   }
 
   if (isError) {
-    return <div className="error-message">{error.message}</div>;
+    return (
+      <div className="text-red-500 text-center mt-5">
+        {error.message}
+      </div>
+    );
   }
 
   const sortedFoodItems = getSortedFoodItems(data.foodItems);
 
   return (
     <div
-      className={`foods-container ${theme === "light" ? "light-foods-bg" : ""}`} 
+      className={`p-8 ${
+        theme === "light" ? "bg-gray-100 rounded-lg" : "bg-white dark:bg-gray-800"
+      } min-h-screen transition duration-300`}
+      style={{
+        "--transition": theme === "light" ? "background-color 0.3s ease" : "",
+      }}
     >
-      <h1 className="text-center text-3xl font-bold mb-6">All Foods</h1>
+      <h1 className="text-center text-3xl font-bold mb-6">
+        All Foods
+      </h1>
 
       <div className="filters-container">
-        <div className="search-container mb-6 max-w-md mx-auto">
+        <div className="max-w-md mx-auto mb-6">
           <input
             type="text"
             placeholder="Search food by name..."
@@ -109,42 +121,41 @@ const Foods = () => {
       </div>
 
       <motion.div
-        className="food-cards-container grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"
+        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"
         initial="hidden"
         animate="visible"
         variants={{
-          hidden: {
-            opacity: 0,
-            scale: 0.8,
-          },
+          hidden: { opacity: 0, scale: 0.8 },
           visible: {
             opacity: 1,
             scale: 1,
-            transition: {
-              delay: 0.3,
-            },
+            transition: { delay: 0.3 },
           },
         }}
       >
         {sortedFoodItems.map((food) => (
-          <FoodCard key={food._id} food={food} />
+          <FoodCard
+            key={food._id}
+            food={food}
+            className={`bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 shadow-md rounded-lg overflow-hidden transition-transform duration-200 hover:-translate-y-1`}
+          />
         ))}
       </motion.div>
 
-      <div className="pagination-container mt-8 flex justify-center">
-        {Array.from({ length: data.totalPages }, (_, i) => i + 1).map(
-          (page) => (
-            <button
-              key={page}
-              onClick={() => handlePageChange(page)}
-              className={`mx-1 px-3 py-1 rounded ${
-                currentPage === page ? "bg-blue-500 text-white" : "bg-gray-200"
-              }`}
-            >
-              {page}
-            </button>
-          )
-        )}
+      <div className="mt-8 flex justify-center">
+        {Array.from({ length: data.totalPages }, (_, i) => i + 1).map((page) => (
+          <button
+            key={page}
+            onClick={() => handlePageChange(page)}
+            className={`mx-1 px-3 py-1 rounded ${
+              currentPage === page
+                ? "bg-blue-500 text-white"
+                : "bg-gray-200 dark:bg-gray-600 dark:text-white"
+            }`}
+          >
+            {page}
+          </button>
+        ))}
       </div>
     </div>
   );
