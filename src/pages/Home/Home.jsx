@@ -5,6 +5,7 @@ import OurStory from "../../components/OurStory/OurStory";
 import PrivateDining from "../../components/PrivateDining/PrivateDining";
 import Events from "../../components/Events/Events";
 import CustomerReviews from "../../components/CustomerReviews/CustomerReviews";
+import DiscountEvents from "../../components/DiscountEvents/DiscountEvents";
 
 const Home = () => {
   const location = useLocation();
@@ -30,6 +31,7 @@ const Home = () => {
     <div className="home-container">
       <TopFoods />
       <PrivateDining />
+      <DiscountEvents></DiscountEvents>
       <Events />
       <CustomerReviews />
       <OurStory />

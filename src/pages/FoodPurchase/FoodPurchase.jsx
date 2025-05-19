@@ -14,10 +14,21 @@ const FoodPurchase = () => {
   const [food, setFood] = useState(null)
   const [quantity, setQuantity] = useState(1)
   const [isAvailable, setIsAvailable] = useState(true)
+  const [discountInfo, setDiscountInfo] = useState(null)
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
+   
+    const storedDiscountInfo = sessionStorage.getItem("discountInfo")
+    if (storedDiscountInfo) {
+      setDiscountInfo(JSON.parse(storedDiscountInfo))
+    
+      sessionStorage.removeItem("discountInfo")
+    }
+
     const fetchFood = async () => {
       try {
+        setLoading(true)
         const response = await axiosInstance.get(`/foods/${id}`)
         setFood(response.data)
         setIsAvailable(response.data.quantity > 0)
@@ -28,6 +39,8 @@ const FoodPurchase = () => {
           text: "Failed to fetch food details.",
           icon: "error",
         })
+      } finally {
+        setLoading(false)
       }
     }
 
@@ -36,12 +49,15 @@ const FoodPurchase = () => {
 
   const handlePurchase = async () => {
     try {
+    
+      const priceToUse = discountInfo?.isDiscounted ? discountInfo.discountedPrice : food.price
+
       const purchaseData = {
         foodId: food._id,
         foodName: food.name,
-        price: food.price,
+        price: priceToUse,
         quantity,
-        buyerName: currentUser.displayName,
+        buyerName: currentUser.displayName || currentUser.name || "Guest",
         buyerEmail: currentUser.email,
       }
 
@@ -78,13 +94,29 @@ const FoodPurchase = () => {
     }
   }
 
-  if (!food) {
-    return <div>Loading...</div>
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center min-h-[300px]">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+      </div>
+    )
   }
+
+  if (!food) {
+    return <div>Food not found</div>
+  }
+
+ 
+  const displayPrice = discountInfo?.isDiscounted ? discountInfo.discountedPrice : food.price
 
   return (
     <div className="food-purchase-container">
       <h1 className="text-center text-3xl font-bold mb-6">Purchase {food.name}</h1>
+      {discountInfo?.isDiscounted && (
+        <div className="bg-green-100 text-green-800 p-3 rounded-md mb-4 text-center">
+          <p className="font-semibold">Special Discount: {discountInfo.discountPercentage}% OFF!</p>
+        </div>
+      )}
       <div className="purchase-form">
         <div className="food-image-container">
           <img src={food.image || "/placeholder.svg"} alt={food.name} className="food-image" />
@@ -94,7 +126,15 @@ const FoodPurchase = () => {
             <strong>Food Name:</strong> {food.name}
           </p>
           <p>
-            <strong>Price:</strong> ${food.price}
+            <strong>Price:</strong>
+            {discountInfo?.isDiscounted ? (
+              <span>
+                <span className="line-through text-gray-500 mr-2">${food.price.toFixed(2)}</span>
+                <span className="text-green-600">${displayPrice.toFixed(2)}</span>
+              </span>
+            ) : (
+              <span>${displayPrice.toFixed(2)}</span>
+            )}
           </p>
           <div className="quantity-input">
             <label>
@@ -109,7 +149,7 @@ const FoodPurchase = () => {
             />
           </div>
           <p>
-            <strong>Buyer Name:</strong> {currentUser.displayName}
+            <strong>Buyer Name:</strong> {currentUser.displayName || currentUser.name || "Guest"}
           </p>
           <p>
             <strong>Buyer Email:</strong> {currentUser.email}
