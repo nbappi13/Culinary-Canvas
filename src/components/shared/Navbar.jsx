@@ -11,14 +11,14 @@ const Navbar = () => {
   const { currentUser, logout } = useAuth()
   const { theme, toggleTheme } = useTheme()
   const [dropdownOpen, setDropdownOpen] = useState(false)
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false) 
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [isSmallScreen, setIsSmallScreen] = useState(false)
   const location = useLocation()
 
- 
+  
   useEffect(() => {
     setDropdownOpen(false)
-    setMobileMenuOpen(false) 
+    setMobileMenuOpen(false)
   }, [location])
 
   useEffect(() => {
@@ -65,6 +65,18 @@ const Navbar = () => {
     return location.pathname === path
   }
 
+  
+  const handleHomeClick = (e) => {
+    if (location.pathname === "/") {
+      e.preventDefault() 
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth", 
+      })
+      setMobileMenuOpen(false) 
+    }
+  }
+
   return (
     <div
       className="navbar w-full"
@@ -101,7 +113,14 @@ const Navbar = () => {
               }}
             >
               <li className={isActive("/") ? "active" : ""}>
-                <Link to="/" style={{ color: "inherit" }} onClick={() => setMobileMenuOpen(false)}>
+                <Link
+                  to="/"
+                  style={{ color: "inherit" }}
+                  onClick={(e) => {
+                    handleHomeClick(e)
+                    setMobileMenuOpen(false)
+                  }}
+                >
                   Home
                 </Link>
               </li>
@@ -147,7 +166,7 @@ const Navbar = () => {
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1 text-1xl font-bold">
           <li className={isActive("/") ? "active" : ""}>
-            <Link to="/" style={{ color: "inherit" }}>
+            <Link to="/" style={{ color: "inherit" }} onClick={handleHomeClick}>
               Home
             </Link>
           </li>
