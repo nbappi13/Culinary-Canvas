@@ -11,12 +11,14 @@ const Navbar = () => {
   const { currentUser, logout } = useAuth()
   const { theme, toggleTheme } = useTheme()
   const [dropdownOpen, setDropdownOpen] = useState(false)
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false) 
   const [isSmallScreen, setIsSmallScreen] = useState(false)
   const location = useLocation()
 
  
   useEffect(() => {
     setDropdownOpen(false)
+    setMobileMenuOpen(false) 
   }, [location])
 
   useEffect(() => {
@@ -55,6 +57,10 @@ const Navbar = () => {
     setDropdownOpen(!dropdownOpen)
   }
 
+  const toggleMobileMenu = () => {
+    setMobileMenuOpen(!mobileMenuOpen)
+  }
+
   const isActive = (path) => {
     return location.pathname === path
   }
@@ -74,7 +80,7 @@ const Navbar = () => {
     >
       <div className="navbar-start">
         <div className="dropdown">
-          <label tabIndex={0} className="btn btn-ghost lg:hidden">
+          <label tabIndex={0} className="btn btn-ghost lg:hidden" onClick={toggleMobileMenu}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-6 w-6"
@@ -85,46 +91,47 @@ const Navbar = () => {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h8m-8 6h16" />
             </svg>
           </label>
-          <ul
-            tabIndex={0}
-            className="menu menu-sm dropdown-content rounded-box z-[100] mt-3 w-52 p-2 shadow"
-            style={{
-              backgroundColor: theme === "dark" ? "#374151" : "#ffffff",
-              color: theme === "dark" ? "#f9fafb" : "#000000",
-            }}
-          >
-            <li className={isActive("/") ? "active" : ""}>
-              <Link to="/" style={{ color: "inherit" }}>
-                Home
-              </Link>
-            </li>
-            <li className={isActive("/all-foods") ? "active" : ""}>
-              <Link to="/all-foods" style={{ color: "inherit" }}>
-                All Foods
-              </Link>
-            </li>
-            <li className={isActive("/events") ? "active" : ""}>
-              <Link to="/events" style={{ color: "inherit" }}>
-                Events
-              </Link>
-            </li>
-
-            <li className={isActive("/contact") ? "active" : ""}>
-              <Link to="/contact" style={{ color: "inherit" }}>
-                Contact
-              </Link>
-            </li>
-            <li className={isActive("/reviews") ? "active" : ""}>
-              <Link to="/reviews" style={{ color: "inherit" }}>
-                Reviews
-              </Link>
-            </li>
-            <li className={isActive("/gallery") ? "active" : ""}>
-              <Link to="/gallery" style={{ color: "inherit" }}>
-                Gallery
-              </Link>
-            </li>
-          </ul>
+          {mobileMenuOpen && (
+            <ul
+              tabIndex={0}
+              className="menu menu-sm dropdown-content rounded-box z-[100] mt-3 w-52 p-2 shadow"
+              style={{
+                backgroundColor: theme === "dark" ? "#374151" : "#ffffff",
+                color: theme === "dark" ? "#f9fafb" : "#000000",
+              }}
+            >
+              <li className={isActive("/") ? "active" : ""}>
+                <Link to="/" style={{ color: "inherit" }} onClick={() => setMobileMenuOpen(false)}>
+                  Home
+                </Link>
+              </li>
+              <li className={isActive("/all-foods") ? "active" : ""}>
+                <Link to="/all-foods" style={{ color: "inherit" }} onClick={() => setMobileMenuOpen(false)}>
+                  All Foods
+                </Link>
+              </li>
+              <li className={isActive("/events") ? "active" : ""}>
+                <Link to="/events" style={{ color: "inherit" }} onClick={() => setMobileMenuOpen(false)}>
+                  Events
+                </Link>
+              </li>
+              <li className={isActive("/contact") ? "active" : ""}>
+                <Link to="/contact" style={{ color: "inherit" }} onClick={() => setMobileMenuOpen(false)}>
+                  Contact
+                </Link>
+              </li>
+              <li className={isActive("/reviews") ? "active" : ""}>
+                <Link to="/reviews" style={{ color: "inherit" }} onClick={() => setMobileMenuOpen(false)}>
+                  Reviews
+                </Link>
+              </li>
+              <li className={isActive("/gallery") ? "active" : ""}>
+                <Link to="/gallery" style={{ color: "inherit" }} onClick={() => setMobileMenuOpen(false)}>
+                  Gallery
+                </Link>
+              </li>
+            </ul>
+          )}
         </div>
         <Link to="/" className="flex items-center space-x-2 text-xl font-bold" style={{ color: "inherit" }}>
           <img
