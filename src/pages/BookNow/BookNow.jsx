@@ -1,10 +1,10 @@
-"use client"
+"use client";
 
-import React, { useState, useContext } from "react"
-import { ToastContainer, toast } from "react-toastify"
-import Swal from "sweetalert2"
-import { AuthContext } from "../../context/AuthProvider"
-import { useNavigate } from "react-router-dom"
+import React, { useState, useContext } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import Swal from "sweetalert2";
+import { AuthContext } from "../../context/AuthProvider";
+import { useNavigate } from "react-router-dom";
 
 const BookNow = () => {
   const [formData, setFormData] = useState({
@@ -13,90 +13,93 @@ const BookNow = () => {
     date: "",
     time: "",
     guests: "",
-  })
-  const [loading, setLoading] = useState(false)
-  const [previousBooking, setPreviousBooking] = useState(null)
-  const { currentUser } = useContext(AuthContext)
-  const navigate = useNavigate()
-  const token = localStorage.getItem("token")
+  });
+  const [loading, setLoading] = useState(false);
+  const [previousBooking, setPreviousBooking] = useState(null);
+  const { currentUser } = useContext(AuthContext);
+  const navigate = useNavigate();
+  const token = localStorage.getItem("token");
 
   const handleChange = (e) => {
-    const { name, value } = e.target
-    setFormData((prevData) => ({ ...prevData, [name]: value }))
-  }
+    const { name, value } = e.target;
+    setFormData((prevData) => ({ ...prevData, [name]: value }));
+  };
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
 
-  
     if (!token || !currentUser) {
       Swal.fire({
         icon: "warning",
         title: "Login Required",
         text: "Please log in to make a booking.",
         confirmButtonText: "Go to Login",
-      }).then(() => navigate("/login"))
-      return
+      }).then(() => navigate("/login"));
+      return;
     }
 
-    const bookingData = JSON.stringify(formData)
+    const bookingData = JSON.stringify(formData);
     if (bookingData === previousBooking) {
       Swal.fire({
         icon: "error",
         title: "Oops...",
         text: "You have already confirmed this booking!",
-      })
-      return
+      });
+      return;
     }
 
     try {
-      setLoading(true)
-      const response = await fetch("http://localhost:5000/api/bookings", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`, 
-        },
-        body: JSON.stringify(formData),
-        credentials: "include",
-      })
+      setLoading(true);
+      const response = await fetch(
+        "https://b10-a11-server-side-chi.vercel.app/api/bookings",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(formData),
+          credentials: "include",
+        }
+      );
 
       if (!response.ok) {
-        const errorData = await response.json()
-        throw new Error(errorData.error || "Failed to save booking")
+        const errorData = await response.json();
+        throw new Error(errorData.error || "Failed to save booking");
       }
 
-      toast.success("Booking confirmed!")
+      toast.success("Booking confirmed!");
       setFormData({
         name: "",
         email: "",
         date: "",
         time: "",
         guests: "",
-      })
-      setPreviousBooking(bookingData)
+      });
+      setPreviousBooking(bookingData);
     } catch (error) {
-      console.error("Booking error:", error.message)
+      console.error("Booking error:", error.message);
 
-      if (error.message.includes("Invalid token") || error.message.includes("Access denied")) {
-       
+      if (
+        error.message.includes("Invalid token") ||
+        error.message.includes("Access denied")
+      ) {
         Swal.fire({
           icon: "error",
           title: "Authentication Error",
           text: "Your session has expired. Please log in again.",
           confirmButtonText: "Go to Login",
         }).then(() => {
-          localStorage.removeItem("token")
-          navigate("/login")
-        })
+          localStorage.removeItem("token");
+          navigate("/login");
+        });
       } else {
-        toast.error(`Booking failed: ${error.message}`)
+        toast.error(`Booking failed: ${error.message}`);
       }
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
-
+  };
 
   React.useEffect(() => {
     if (currentUser && currentUser.email) {
@@ -104,9 +107,9 @@ const BookNow = () => {
         ...prev,
         email: currentUser.email,
         name: currentUser.displayName || currentUser.name || "",
-      }))
+      }));
     }
-  }, [currentUser])
+  }, [currentUser]);
 
   return (
     <div
@@ -114,7 +117,9 @@ const BookNow = () => {
       style={{ backgroundImage: `url('/src/assets/private_dining.jpg')` }}
     >
       <div className="bg-white bg-opacity-80 p-8 rounded-lg shadow-lg max-w-md w-full">
-        <h2 className="text-4xl font-bold mb-6 text-center">Book Your Private Dining Experience</h2>
+        <h2 className="text-4xl font-bold mb-6 text-center">
+          Book Your Private Dining Experience
+        </h2>
         <form className="space-y-4" onSubmit={handleSubmit}>
           <div>
             <input
@@ -169,14 +174,22 @@ const BookNow = () => {
               className="input input-bordered w-full"
             />
           </div>
-          <button type="submit" className="btn btn-primary w-full mt-2" disabled={loading}>
-            {loading ? <span className="loading loading-spinner loading-sm"></span> : "Submit"}
+          <button
+            type="submit"
+            className="btn btn-primary w-full mt-2"
+            disabled={loading}
+          >
+            {loading ? (
+              <span className="loading loading-spinner loading-sm"></span>
+            ) : (
+              "Submit"
+            )}
           </button>
         </form>
       </div>
       <ToastContainer />
     </div>
-  )
-}
+  );
+};
 
-export default BookNow
+export default BookNow;

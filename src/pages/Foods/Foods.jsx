@@ -86,7 +86,7 @@ const Foods = () => {
 
   if (isError) {
     return (
-      <div className="text-red-500 text-center mt-5">
+      <div className="text-red-500 text-center mt-5 dark:text-red-400">
         {error.message}
       </div>
     );
@@ -96,23 +96,20 @@ const Foods = () => {
 
   return (
     <div
-      className={`p-8 ${
-        theme === "light" ? "bg-gray-100 rounded-lg" : "bg-white dark:bg-gray-800"
-      } min-h-screen transition duration-300`}
-      style={{
-        "--transition": theme === "light" ? "background-color 0.3s ease" : "",
-      }}
+      className={`p-8 min-h-screen transition duration-300 ${
+        theme === "light"
+          ? "bg-gray-100 text-gray-900"
+          : "bg-gray-900 text-white"
+      }`}
     >
-      <h1 className="text-center text-3xl font-bold mb-6">
-        All Foods
-      </h1>
+      <h1 className="text-center text-3xl font-bold mb-6">All Foods</h1>
 
       <div className="filters-container">
         <div className="max-w-md mx-auto mb-6">
           <input
             type="text"
             placeholder="Search food by name..."
-            className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-800 text-black dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
             value={searchTerm}
             onChange={handleSearch}
             ref={inputRef}
@@ -137,7 +134,7 @@ const Foods = () => {
           <FoodCard
             key={food._id}
             food={food}
-            className={`bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 shadow-md rounded-lg overflow-hidden transition-transform duration-200 hover:-translate-y-1`}
+            className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 shadow-md rounded-lg overflow-hidden transition-transform duration-200 hover:-translate-y-1"
           />
         ))}
       </motion.div>
@@ -150,7 +147,7 @@ const Foods = () => {
             className={`mx-1 px-3 py-1 rounded ${
               currentPage === page
                 ? "bg-blue-500 text-white"
-                : "bg-gray-200 dark:bg-gray-600 dark:text-white"
+                : "bg-gray-200 dark:bg-gray-700 dark:text-white"
             }`}
           >
             {page}
