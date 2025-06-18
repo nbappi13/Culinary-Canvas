@@ -1,12 +1,13 @@
 "use client"
 import { useNavigate, useLocation } from "react-router-dom"
-import { FaFacebook, FaInstagram} from "react-icons/fa"
-import { FaX } from 'react-icons/fa6';
+import { FaFacebook, FaInstagram } from "react-icons/fa"
+import { FaX } from "react-icons/fa6"
 
 const Footer = () => {
   const navigate = useNavigate()
   const location = useLocation()
 
+  // Handle home navigation with smooth scroll
   const handleHomeClick = () => {
     if (location.pathname !== "/") {
       navigate("/")
@@ -15,6 +16,7 @@ const Footer = () => {
     }
   }
 
+  // Handle About Us navigation with auto-expand
   const handleAboutUsClick = () => {
     if (location.pathname !== "/") {
       navigate("/", { state: { scrollToOurStory: true } })
@@ -33,11 +35,13 @@ const Footer = () => {
   return (
     <footer className="w-full flex flex-col items-center bg-[#333] text-white p-5 dark:bg-gray-800 dark:text-gray-200">
       <div className="w-full flex flex-wrap justify-between items-center">
+        {/* Logo section - hidden on small screens */}
         <div className="flex items-center gap-2.5 sm:block hidden">
           <img src="/restaurant_logo.png" alt="Restaurant Logo" className="w-[60px] h-[60px]" loading="lazy" />
           <span className="text-xl font-bold">Culinary Canvas</span>
         </div>
 
+        {/* Navigation links section */}
         <div className="text-center">
           <span className="text-lg font-bold mb-2.5 mr-[100px] block">Navigation</span>
           <button
@@ -72,6 +76,7 @@ const Footer = () => {
           </button>
         </div>
 
+        {/* Social media links section */}
         <div className="flex items-center gap-[15px]">
           <span className="text-lg font-bold mb-2.5 mr-[100px] block">Follow Us</span>
           <a
@@ -101,6 +106,7 @@ const Footer = () => {
         </div>
       </div>
 
+      {/* Footer bottom section */}
       <hr className="border-0 border-t border-[#555] w-full my-4 dark:border-gray-500" />
       <p className="m-0 text-sm text-[#aaa] dark:text-gray-300">
         All rights reserved by Culinary Canvas © {new Date().getFullYear()}

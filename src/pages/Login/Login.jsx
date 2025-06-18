@@ -4,29 +4,33 @@ import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 
 const Login = () => {
+  // State for form inputs and errors
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
+  // Handle email/password login
   const handleEmailLogin = async (e) => {
     e.preventDefault();
     setError('');
     try {
       await loginWithEmailPassword(email, password);
+      // Show success message
       Swal.fire({
         title: 'Login Successful!',
         icon: 'success',
         timer: 1500,
         showConfirmButton: false,
       });
-      navigate('/');
+      navigate('/'); // Go to home page
     } catch (err) {
-      setError(err.message);
+      setError(err.message); // Show error if login fails
     }
   };
 
+  // Handle Google login
   const handleGoogleLogin = async () => {
     setError('');
     try {
@@ -43,6 +47,7 @@ const Login = () => {
     }
   };
 
+  // Handle GitHub login
   const handleGithubLogin = async () => {
     setError('');
     try {
@@ -59,6 +64,7 @@ const Login = () => {
     }
   };
 
+  // Toggle password visibility
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
   };
@@ -72,8 +78,11 @@ const Login = () => {
         backgroundPosition: 'center'
       }}
     >
+      {/* Login form container */}
       <div className="max-w-md mx-auto my-10 p-6 bg-base-200 rounded-lg">
         <h2 className="text-2xl font-bold text-center mb-6">Login</h2>
+        
+        {/* Email/password login form */}
         <form onSubmit={handleEmailLogin}>
           <div className="mb-4">
             <label className="block text-sm font-medium">Email</label>
@@ -85,6 +94,8 @@ const Login = () => {
               required
             />
           </div>
+          
+          {/* Password field with toggle */}
           <div className="mb-4 relative">
             <label className="block text-sm font-medium">Password</label>
             <input
@@ -94,6 +105,7 @@ const Login = () => {
               onChange={(e) => setPassword(e.target.value)}
               required
             />
+            {/* Show/hide password toggle */}
             <span
               className="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer"
               onClick={toggleShowPassword}
@@ -143,12 +155,20 @@ const Login = () => {
               )}
             </span>
           </div>
+          
+          {/* Show error if any */}
           {error && <p className="text-red-500 text-sm">{error}</p>}
+          
+          {/* Submit button */}
           <button type="submit" className="btn btn-primary w-full">Login</button>
         </form>
+        
+        {/* Social login options */}
         <div className="divider">OR</div>
         <button onClick={handleGoogleLogin} className="btn btn-outline btn-accent w-full mb-2">Login with Google</button>
         <button onClick={handleGithubLogin} className="btn btn-outline w-full">Login with GitHub</button>
+        
+        {/* Register link */}
         <p className="text-sm text-center mt-4">
           Don't have an account? <a href="/register" className="text-blue-500">Register</a>
         </p>

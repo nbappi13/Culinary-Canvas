@@ -1,3 +1,4 @@
+
 "use client"
 
 import { useState, useEffect, useContext } from "react"
@@ -8,30 +9,30 @@ import "../../styles/FoodPurchase.css"
 import axiosInstance from "../../utils/axiosInstance"
 
 const FoodPurchase = () => {
-  const { id } = useParams()
+  const { id } = useParams() 
   const navigate = useNavigate()
-  const { currentUser } = useContext(AuthContext)
-  const [food, setFood] = useState(null)
-  const [quantity, setQuantity] = useState(1)
-  const [isAvailable, setIsAvailable] = useState(true)
-  const [discountInfo, setDiscountInfo] = useState(null)
-  const [loading, setLoading] = useState(true)
+  const { currentUser } = useContext(AuthContext) // Get current user info
+  const [food, setFood] = useState(null) // Store food data
+  const [quantity, setQuantity] = useState(1) // Quantity to purchase
+  const [isAvailable, setIsAvailable] = useState(true) // Check if food is available
+  const [discountInfo, setDiscountInfo] = useState(null) // Store discount info
+  const [loading, setLoading] = useState(true) // Loading state
 
   useEffect(() => {
-   
+    // Check for discount info in session storage
     const storedDiscountInfo = sessionStorage.getItem("discountInfo")
     if (storedDiscountInfo) {
       setDiscountInfo(JSON.parse(storedDiscountInfo))
-    
-      sessionStorage.removeItem("discountInfo")
+      sessionStorage.removeItem("discountInfo") // Clear after getting
     }
 
+    // Fetch food details from API
     const fetchFood = async () => {
       try {
         setLoading(true)
         const response = await axiosInstance.get(`/foods/${id}`)
         setFood(response.data)
-        setIsAvailable(response.data.quantity > 0)
+        setIsAvailable(response.data.quantity > 0) // Set availability
       } catch (error) {
         console.error("Error fetching food:", error)
         Swal.fire({
@@ -47,11 +48,13 @@ const FoodPurchase = () => {
     fetchFood()
   }, [id])
 
+  // Handle purchase button click
   const handlePurchase = async () => {
     try {
-    
+      // Use discounted price if available
       const priceToUse = discountInfo?.isDiscounted ? discountInfo.discountedPrice : food.price
 
+      // Prepare purchase data
       const purchaseData = {
         foodId: food._id,
         foodName: food.name,
@@ -61,9 +64,11 @@ const FoodPurchase = () => {
         buyerEmail: currentUser.email,
       }
 
+      // Send purchase request
       const response = await axiosInstance.post(`/foods/${id}/purchase`, purchaseData)
 
       if (response.status === 201) {
+        // Show success message
         Swal.fire({
           title: "Purchase Successful!",
           icon: "success",
@@ -71,12 +76,12 @@ const FoodPurchase = () => {
           showConfirmButton: false,
         })
 
+        // Trigger event to update other components
         window.dispatchEvent(new CustomEvent("purchaseSuccess"))
-        navigate(`/food/${id}`)
-      } else {
-        throw new Error("Unexpected response status")
+        navigate(`/food/${id}`) // Go back to food page
       }
     } catch (error) {
+      // Handle errors
       console.error("Purchase error:", error)
       let errorMessage = "An error occurred while making the purchase."
       if (error.response) {
@@ -94,6 +99,7 @@ const FoodPurchase = () => {
     }
   }
 
+  // Loading spinner
   if (loading) {
     return (
       <div className="flex justify-center items-center min-h-[300px]">
@@ -102,29 +108,35 @@ const FoodPurchase = () => {
     )
   }
 
+  // If no food found
   if (!food) {
     return <div>Food not found</div>
   }
 
- 
+  // Calculate price to display (discounted or regular)
   const displayPrice = discountInfo?.isDiscounted ? discountInfo.discountedPrice : food.price
 
   return (
     <div className="food-purchase-container">
       <h1 className="text-center text-3xl font-bold mb-6">Purchase {food.name}</h1>
+      
+      {/* Show discount banner if available */}
       {discountInfo?.isDiscounted && (
         <div className="bg-green-100 text-green-800 p-3 rounded-md mb-4 text-center">
           <p className="font-semibold">Special Discount: {discountInfo.discountPercentage}% OFF!</p>
         </div>
       )}
+      
       <div className="purchase-form">
         <div className="food-image-container">
           <img src={food.image || "/placeholder.svg"} alt={food.name} className="food-image" />
         </div>
+        
         <div className="food-details-container">
-          <p>
-            <strong>Food Name:</strong> {food.name}
-          </p>
+          {/* Food details */}
+          <p><strong>Food Name:</strong> {food.name}</p>
+          
+          {/* Price display (shows discount if available) */}
           <p>
             <strong>Price:</strong>
             {discountInfo?.isDiscounted ? (
@@ -136,10 +148,10 @@ const FoodPurchase = () => {
               <span>${displayPrice.toFixed(2)}</span>
             )}
           </p>
+          
+          {/* Quantity selector */}
           <div className="quantity-input">
-            <label>
-              <strong>Quantity:</strong>
-            </label>
+            <label><strong>Quantity:</strong></label>
             <input
               type="number"
               value={quantity}
@@ -148,13 +160,15 @@ const FoodPurchase = () => {
               onChange={(e) => setQuantity(Math.min(Number.parseInt(e.target.value) || 1, food.quantity))}
             />
           </div>
-          <p>
-            <strong>Buyer Name:</strong> {currentUser.displayName || currentUser.name || "Guest"}
-          </p>
-          <p>
-            <strong>Buyer Email:</strong> {currentUser.email}
-          </p>
+          
+          {/* Buyer info */}
+          <p><strong>Buyer Name:</strong> {currentUser.displayName || currentUser.name || "Guest"}</p>
+          <p><strong>Buyer Email:</strong> {currentUser.email}</p>
+          
+          {/* Out of stock message */}
           {!isAvailable && <p className="error-message">This item is not available for purchase.</p>}
+          
+          {/* Purchase button */}
           <button
             onClick={handlePurchase}
             className="purchase-button"

@@ -3,24 +3,32 @@ import { useTheme } from "../../context/ThemeProvider";
 import "../../styles/OurStory.css";
 
 const OurStory = () => {
+  // State to toggle expanded view
   const [expanded, setExpanded] = useState(false);
   const { theme } = useTheme(); 
 
+  // Toggle read more/less
   const handleToggle = () => {
     setExpanded(!expanded);
   };
 
   return (
+    // Main container with theme
     <div
       className={`our-story-container ${
         theme === "light" ? "light-our-story-bg" : ""
       }`} 
     >
+      {/* Story card */}
       <div className="our-story-card">
+        {/* Title section */}
         <div className="our-story-title-wrapper">
           <h2 className="our-story-title">Our Story & Mission</h2>
         </div>
+
+        {/* Content section */}
         <div className="our-story-content">
+          {/* Text content */}
           <div className="our-story-text-section">
             <p className="our-story-paragraph">
               Culinary Canvas began its journey in the early 1950s as a small
@@ -30,6 +38,8 @@ const OurStory = () => {
               embracing modern culinary techniques to bring you the best dining
               experience.
             </p>
+
+            {/* Expanded content */}
             {expanded && (
               <>
                 <h3 className="our-story-subtitle">Our Mission</h3>
@@ -49,10 +59,14 @@ const OurStory = () => {
                 </p>
               </>
             )}
+
+            {/* Read more/less button */}
             <button className="read-more-button" onClick={handleToggle}>
               {expanded ? "Read Less" : "Read More"}
             </button>
           </div>
+
+          {/* Expanded image */}
           {expanded && (
             <div className="our-story-image-section">
               <img

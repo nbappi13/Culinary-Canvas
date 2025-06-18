@@ -4,9 +4,11 @@ import { motion } from "framer-motion";
 import { useTheme } from "../../context/ThemeProvider"; 
 
 const CustomerReviews = () => {
+  // State for current review index
   const [activeIndex, setActiveIndex] = useState(0);
   const { theme } = useTheme(); 
 
+  // Auto-rotate reviews every 5 seconds
   useEffect(() => {
     const interval = setInterval(() => {
       setActiveIndex((current) => (current + 1) % reviews.length);
@@ -16,12 +18,14 @@ const CustomerReviews = () => {
   }, []);
 
   return (
+    // Main section with theme colors
     <section
       className={`py-16 px-4 ${
         theme === "dark" ? "bg-gray-900 text-white" : "bg-slate-300 text-gray-800"
       } transition-colors duration-300`}
     >
       <div className="max-w-6xl mx-auto">
+        {/* Section heading */}
         <h2 className="text-4xl font-bold text-center mb-2">Customer Reviews</h2>
         <p
           className={`text-center text-lg max-w-xl mx-auto mb-10 ${
@@ -31,11 +35,14 @@ const CustomerReviews = () => {
           What our customers are saying...
         </p>
 
+        {/* Reviews carousel */}
         <div className="relative w-full max-w-5xl mx-auto overflow-hidden">
+          {/* Animated reviews container */}
           <motion.div
             className="flex transition-transform duration-600 ease-in-out"
             style={{ transform: `translateX(-${activeIndex * 100}%)` }}
           >
+            {/* Map through all reviews */}
             {reviews.map((review) => (
               <motion.div
                 key={review.id}
@@ -46,7 +53,7 @@ const CustomerReviews = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4 }}
               >
-             
+                {/* Review header with avatar */}
                 <div className="flex items-center gap-4 mb-4">
                   <img
                     src={review.avatar || "/placeholder.svg"}
@@ -56,6 +63,7 @@ const CustomerReviews = () => {
                   />
                   <div className="flex flex-col">
                     <h3 className="text-xl font-semibold">{review.name}</h3>
+                    {/* Star rating */}
                     <div className="flex gap-1 text-yellow-500 text-lg">
                       {[...Array(5)].map((_, i) => (
                         <span key={i}>{i < review.rating ? "★" : "☆"}</span>
@@ -71,7 +79,7 @@ const CustomerReviews = () => {
                   </div>
                 </div>
 
-               
+                {/* Review text */}
                 <div
                   className={`italic ${
                     theme === "dark" ? "text-gray-300" : "text-gray-700"
@@ -83,7 +91,7 @@ const CustomerReviews = () => {
             ))}
           </motion.div>
 
-         
+          {/* Navigation dots */}
           <div className="flex justify-center mt-6 space-x-2">
             {reviews.map((_, index) => (
               <button
@@ -101,7 +109,7 @@ const CustomerReviews = () => {
             ))}
           </div>
 
-         
+          {/* Navigation arrows */}
           <button
             onClick={() =>
               setActiveIndex(
@@ -128,7 +136,7 @@ const CustomerReviews = () => {
   );
 };
 
-
+// Reviews data
 const reviews = [
   {
     id: 1,

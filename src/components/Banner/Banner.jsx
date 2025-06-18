@@ -1,27 +1,29 @@
-"use client";
+"use client"
 
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { ChevronLeft, ChevronRight } from "lucide-react";
-import image1 from "../../assets/slide/slider1.webp";
-import image2 from "../../assets/slide/slider2.webp";
-import image3 from "../../assets/slide/slider3.webp";
-import image4 from "../../assets/slide/slider4.webp";
-import image5 from "../../assets/slide/slider5.webp";
+import { useState } from "react"
+import { motion, AnimatePresence } from "framer-motion"
+import { ChevronLeft, ChevronRight } from "lucide-react"
+import image1 from "../../assets/slide/slider1.webp"
+import image2 from "../../assets/slide/slider2.webp"
+import image3 from "../../assets/slide/slider3.webp"
+import image4 from "../../assets/slide/slider4.webp"
+import image5 from "../../assets/slide/slider5.webp"
 
-const images = [image1, image2, image3, image4, image5];
+// Array of banner images for the carousel
+const images = [image1, image2, image3, image4, image5]
 
 const Banner = () => {
-  const [currentSlide, setCurrentSlide] = useState(0);
-  const [direction, setDirection] = useState(1); 
+  const [currentSlide, setCurrentSlide] = useState(0)
+  const [direction, setDirection] = useState(1) // 1 for next, -1 for previous
 
+  // Function to change slides with animation direction
   const paginate = (newDirection) => {
-    setDirection(newDirection);
-    const nextSlide = (currentSlide + newDirection + images.length) % images.length;
-    setCurrentSlide(nextSlide);
-  };
+    setDirection(newDirection)
+    const nextSlide = (currentSlide + newDirection + images.length) % images.length
+    setCurrentSlide(nextSlide)
+  }
 
- 
+  // Animation settings for smooth transitions
   const transition = {
     type: "spring",
     stiffness: 250,
@@ -29,8 +31,9 @@ const Banner = () => {
     mass: 0.5,
     restDelta: 0.001,
     bounce: 0,
-  };
+  }
 
+  // Animation variants for slide transitions
   const variants = {
     enter: (dir) => ({
       x: dir === 1 ? "100%" : "-100%",
@@ -41,7 +44,7 @@ const Banner = () => {
     exit: (dir) => ({
       x: dir === 1 ? "-100%" : "100%",
     }),
-  };
+  }
 
   return (
     <div
@@ -54,6 +57,7 @@ const Banner = () => {
       }}
     >
       <div className="relative w-full h-full">
+        {/* Image carousel with animations */}
         <AnimatePresence custom={direction} mode="popLayout">
           <motion.img
             key={currentSlide}
@@ -69,15 +73,15 @@ const Banner = () => {
             className="absolute inset-0 w-full h-full object-cover object-center"
             style={{
               willChange: "transform, opacity",
-              transform: "translate3d(0,0,0)", 
+              transform: "translate3d(0,0,0)",
             }}
           />
         </AnimatePresence>
 
-      
+        {/* Dark overlay for better text readability */}
         <div className="absolute inset-0 bg-gradient-to-b from-black/30 to-black/30 z-10" />
 
-       
+        {/* Previous slide button */}
         <button
           className="absolute top-1/2 left-4 -translate-y-1/2 z-30 w-14 h-14 sm:w-16 sm:h-16 bg-white/10 rounded-full hover:bg-white/20 transition"
           onClick={() => paginate(-1)}
@@ -85,6 +89,7 @@ const Banner = () => {
           <ChevronLeft size={32} className="text-white" />
         </button>
 
+        {/* Next slide button */}
         <button
           className="absolute top-1/2 right-4 -translate-y-1/2 z-30 w-14 h-14 sm:w-16 sm:h-16 bg-white/10 rounded-full hover:bg-white/20 transition"
           onClick={() => paginate(1)}
@@ -92,7 +97,7 @@ const Banner = () => {
           <ChevronRight size={32} className="text-white" />
         </button>
 
-      
+        {/* Banner text content */}
         <div className="absolute inset-0 flex flex-col items-center justify-center p-8 sm:p-12 text-center z-20">
           <motion.h1
             key={currentSlide + "-heading"}
@@ -118,7 +123,7 @@ const Banner = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Banner;
+export default Banner

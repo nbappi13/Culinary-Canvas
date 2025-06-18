@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
+/* CSS custom properties for theme system */
 :root {
   --bg-color: #ffffff;
   --text-color: #000000;
@@ -15,6 +16,7 @@
   --subtitle-font: "Cursive", sans-serif;
 }
 
+/* Dark theme variables */
 [data-theme="dark"] {
   --bg-color: #121212;
   --text-color: #ffffff;
@@ -27,18 +29,21 @@
   --button-hover-bg: #0056b3;
 }
 
+/* Global body styles with theme support */
 body {
   background-color: var(--bg-color);
   color: var(--text-color);
   transition: background-color 0.3s, color 0.3s;
 }
 
+/* Navbar theme styles */
 .navbar {
   background-color: var(--navbar-bg);
   color: var(--navbar-text);
   transition: background-color 0.3s, color 0.3s;
 }
 
+/* Food card component styles */
 .food-card {
   background-color: var(--card-bg);
   color: var(--card-text);
@@ -69,6 +74,7 @@ body {
   margin: 0.5rem 0;
 }
 
+/* Button styles with theme support */
 .details-button {
   background-color: var(--button-bg);
   color: var(--button-text);
@@ -83,6 +89,7 @@ body {
   background-color: var(--button-hover-bg);
 }
 
+/* Loading and error states */
 .spinner-container {
   display: flex;
   justify-content: center;
@@ -96,6 +103,7 @@ body {
   margin-top: 20px;
 }
 
+/* Foods page container */
 .foods-container {
   padding: 2rem;
   background-color: var(--bg-color);
@@ -107,6 +115,7 @@ body {
   gap: 1rem;
 }
 
+/* Pagination styles */
 .pagination-container button {
   background-color: var(--button-bg);
   color: var(--button-text);

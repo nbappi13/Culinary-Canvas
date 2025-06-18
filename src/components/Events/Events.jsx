@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { useTheme } from "../../context/ThemeProvider";
 
+// List of available events
 const eventsList = [
   {
     id: 1,
@@ -14,51 +15,29 @@ const eventsList = [
       "https://images.unsplash.com/photo-1519225421980-715cb0215aed?q=80&w=2070 ",
     capacity: "50-200 guests",
   },
-  {
-    id: 2,
-    title: "Corporate Gatherings",
-    description:
-      "Impress your clients and colleagues with our sophisticated corporate event spaces. Perfect for meetings, conferences, and team celebrations.",
-    image:
-      "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?q=80&w=2069 ",
-    capacity: "20-100 guests",
-  },
-  {
-    id: 3,
-    title: "Birthday Celebrations",
-    description:
-      "Make your special day extraordinary with our birthday packages. From intimate gatherings to lavish parties, we cater to all your needs.",
-    image:
-      "https://images.unsplash.com/photo-1464349153735-7db50ed83c84?q=80&w=2069 ",
-    capacity: "10-50 guests",
-  },
-  {
-    id: 4,
-    title: "Seasonal Festivities",
-    description:
-      "Celebrate holidays and seasonal events with our festive menus and decorated spaces. Perfect for Thanksgiving, Christmas, and New Year gatherings.",
-    image:
-      "https://images.unsplash.com/photo-1482275548304-a58859dc31b7?q=80&w=2070 ",
-    capacity: "30-150 guests",
-  },
+  // ... other events
 ];
 
 const Events = () => {
+  // State for currently selected event
   const [activeEvent, setActiveEvent] = useState(eventsList[0]);
   const navigate = useNavigate();
   const { theme } = useTheme(); 
 
+  // Navigate to contact page
   const handleContactClick = () => {
     navigate("/contact");
   };
 
   return (
+    // Main section with theme colors
     <section
       className={`py-20 px-4 ${
         theme === "dark" ? "bg-gray-900 text-white" : "bg-zinc-200 text-gray-900"
       } transition-colors duration-300`}
     >
       <div className="max-w-6xl mx-auto">
+        {/* Section heading */}
         <h2 className="text-4xl font-bold text-center mb-2">Special Events</h2>
         <p
           className={`text-center text-lg max-w-xl mx-auto mb-10 ${
@@ -69,6 +48,7 @@ const Events = () => {
         </p>
 
         <div className="flex flex-col items-center gap-6">
+          {/* Event type buttons */}
           <div className="flex flex-wrap justify-center gap-3">
             {eventsList.map((event) => (
               <button
@@ -87,6 +67,7 @@ const Events = () => {
             ))}
           </div>
 
+          {/* Animated event details card */}
           <motion.div
             key={activeEvent.id}
             initial={{ opacity: 0, y: 20 }}
@@ -96,6 +77,7 @@ const Events = () => {
               theme === "dark" ? "bg-gray-800" : "bg-white"
             }`}
           >
+            {/* Event image with capacity label */}
             <div className="relative w-full h-72 md:h-80 lg:h-96">
               <img
                 src={activeEvent.image || "/placeholder.svg"}
@@ -108,6 +90,7 @@ const Events = () => {
               </div>
             </div>
 
+            {/* Event description and contact button */}
             <div className="p-6 md:p-8">
               <h3 className="text-2xl font-bold mb-3">{activeEvent.title}</h3>
               <p

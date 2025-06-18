@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useEffect, useState } from "react";
@@ -6,13 +7,14 @@ import axios from "axios";
 import Swal from "sweetalert2";
 
 const DiscountEvents = () => {
-  const [foods, setFoods] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [foods, setFoods] = useState([]); // Store discounted foods
+  const [loading, setLoading] = useState(true); // Loading state
   const navigate = useNavigate();
   const user = JSON.parse(localStorage.getItem("user")) || {};
   const currentUser = user.user || {};
-  const token = localStorage.getItem("token");
+  const token = localStorage.getItem("token"); // Get auth token
 
+  // Fetch discounted foods on component mount
   useEffect(() => {
     const fetchDiscountFoods = async () => {
       try {
@@ -31,7 +33,23 @@ const DiscountEvents = () => {
     fetchDiscountFoods();
   }, []);
 
+  // Handle click on food details
+  const handleDetailsClick = (food) => {
+    // Save discount info to session storage
+    const discountInfo = {
+      discountedPrice: food.discountedPrice,
+      discountPercentage: food.discountPercentage,
+      isDiscounted: true,
+    };
+    sessionStorage.setItem("discountInfo", JSON.stringify(discountInfo));
+    
+    // Go to food details page
+    navigate(`/food/${food._id}`);
+  };
+
+  // Handle purchase button click
   const handlePurchaseClick = (food) => {
+    // Check if user is logged in
     if (!token) {
       Swal.fire({
         icon: "warning",
@@ -42,6 +60,7 @@ const DiscountEvents = () => {
       return;
     }
 
+    // Save discount info to session storage
     const discountInfo = {
       discountedPrice: food.discountedPrice,
       discountPercentage: food.discountPercentage,
@@ -49,9 +68,11 @@ const DiscountEvents = () => {
     };
     sessionStorage.setItem("discountInfo", JSON.stringify(discountInfo));
 
+    // Go to purchase page
     navigate(`/purchase/${food._id}`);
   };
 
+  // Loading spinner
   if (loading) {
     return (
       <section className="py-16 mt-10 bg-gradient-to-b from-amber-50 to-orange-50 dark:from-gray-800 dark:to-gray-900 px-4">
@@ -80,9 +101,11 @@ const DiscountEvents = () => {
           </p>
         </div>
 
+        {/* Display discounted foods */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {foods.length > 0 ? (
             foods.map((food) => {
+              // Calculate discount info
               const discountPercentage = food.discountPercentage || 30;
               const discountedPrice =
                 food.discountedPrice || (food.price * 0.7).toFixed(2);
@@ -92,21 +115,41 @@ const DiscountEvents = () => {
                   key={food._id}
                   className="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden transition-all duration-300 hover:shadow-2xl hover:scale-105 border border-amber-100 dark:border-gray-700"
                 >
+                  {/* Food image with discount badge */}
                   <div className="relative">
                     <img
                       src={food.image || "/placeholder.svg"}
                       alt={food.name}
-                      className="w-full h-48 object-cover"
+                      className="w-full h-48 object-cover cursor-pointer"
+                      onClick={() => 
+                        handleDetailsClick({
+                          ...food,
+                          discountedPrice: Number.parseFloat(discountedPrice),
+                          discountPercentage,
+                        })
+                      }
                     />
                     <div className="absolute top-0 right-0 bg-red-500 text-white font-bold py-1 px-3 rounded-bl-lg">
                       {discountPercentage}% OFF
                     </div>
                   </div>
 
+                  {/* Food details */}
                   <div className="p-5">
-                    <h3 className="font-bold text-xl text-gray-800 dark:text-white mb-2">
+                    <h3 
+                      className="font-bold text-xl text-gray-800 dark:text-white mb-2 cursor-pointer"
+                      onClick={() => 
+                        handleDetailsClick({
+                          ...food,
+                          discountedPrice: Number.parseFloat(discountedPrice),
+                          discountPercentage,
+                        })
+                      }
+                    >
                       {food.name}
                     </h3>
+                    
+                    {/* Price display */}
                     <div className="flex items-center justify-between mb-4">
                       <span className="line-through text-gray-500 dark:text-gray-400">
                         ${food.price.toFixed(2)}
@@ -116,16 +159,18 @@ const DiscountEvents = () => {
                       </span>
                     </div>
 
+                    {/* Discount notice */}
                     <div className="bg-amber-50 dark:bg-gray-700 p-2 rounded-lg mb-4">
                       <p className="text-amber-800 dark:text-amber-300 text-sm text-center">
                         Limited time offer! Order now while supplies last.
                       </p>
                     </div>
 
+                    {/* Purchase button */}
                     <button
                       onClick={() =>
                         handlePurchaseClick({
-                          _id: food._id,
+                          ...food,
                           discountedPrice: Number.parseFloat(discountedPrice),
                           discountPercentage,
                         })
@@ -147,6 +192,7 @@ const DiscountEvents = () => {
               );
             })
           ) : (
+            // Show message when no discounts available
             <div className="col-span-full bg-white dark:bg-gray-800 rounded-lg shadow-md p-8 text-center">
               <svg
                 xmlns="http://www.w3.org/2000/svg"

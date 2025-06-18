@@ -6,12 +6,14 @@ import Swal from "sweetalert2"
 import { useUpdateFood } from "../../services/foodService"
 import { useAuth } from "../../context/AuthProvider"
 
+// Set modal root element for accessibility
 Modal.setAppElement("#root")
 
 const UpdateFoodModal = ({ food, onSuccess, onClose }) => {
   const { currentUser } = useAuth()
   const updateFoodMutation = useUpdateFood()
 
+  // Form state for food data
   const [formData, setFormData] = useState({
     name: "",
     image: "",
@@ -23,6 +25,7 @@ const UpdateFoodModal = ({ food, onSuccess, onClose }) => {
 
   const [isUpdating, setIsUpdating] = useState(false)
 
+  // Populate form with existing food data
   useEffect(() => {
     if (food) {
       setFormData({
@@ -35,6 +38,7 @@ const UpdateFoodModal = ({ food, onSuccess, onClose }) => {
     }
   }, [food])
 
+  // Handle form input changes
   const handleChange = (e) => {
     const { name, value } = e.target
     if (name in formData.description) {
@@ -47,10 +51,12 @@ const UpdateFoodModal = ({ food, onSuccess, onClose }) => {
     }
   }
 
+  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault()
     setIsUpdating(true)
 
+    // Prepare updated food data
     const updatedFoodData = {
       name: formData.name,
       image: formData.image,
@@ -86,7 +92,7 @@ const UpdateFoodModal = ({ food, onSuccess, onClose }) => {
     }
   }
 
- 
+  // Modal styling configuration
   const customStyles = {
     content: {
       position: "fixed",
@@ -124,6 +130,7 @@ const UpdateFoodModal = ({ food, onSuccess, onClose }) => {
       <div className="flex-1 overflow-y-auto p-5 max-h-[calc(80vh-100px)]">
         <h2 className="text-xl font-bold mb-4 text-[var(--text-color)]">Update Food</h2>
         <form onSubmit={handleSubmit} className="flex flex-col h-full">
+          {/* Name and Price fields */}
           <div className="flex flex-wrap gap-3 mb-4 sm:flex-row flex-col">
             <label className="w-full sm:w-[48%] flex flex-col">
               <span className="mb-1 font-medium">Name:</span>
@@ -149,6 +156,7 @@ const UpdateFoodModal = ({ food, onSuccess, onClose }) => {
             </label>
           </div>
 
+          {/* Quantity and Category fields */}
           <div className="flex flex-wrap gap-3 mb-4 sm:flex-row flex-col">
             <label className="w-full sm:w-[48%] flex flex-col">
               <span className="mb-1 font-medium">Quantity:</span>
@@ -174,6 +182,7 @@ const UpdateFoodModal = ({ food, onSuccess, onClose }) => {
             </label>
           </div>
 
+          {/* Image URL and Origin fields */}
           <div className="flex flex-wrap gap-3 mb-4 sm:flex-row flex-col">
             <label className="w-full sm:w-[48%] flex flex-col">
               <span className="mb-1 font-medium">Image URL:</span>
@@ -199,6 +208,7 @@ const UpdateFoodModal = ({ food, onSuccess, onClose }) => {
             </label>
           </div>
 
+          {/* Description field */}
           <label className="w-full flex flex-col mb-4">
             <span className="mb-1 font-medium">Description:</span>
             <textarea
@@ -212,6 +222,7 @@ const UpdateFoodModal = ({ food, onSuccess, onClose }) => {
         </form>
       </div>
 
+      {/* Modal action buttons */}
       <div className="p-4 sm:p-5 border-t border-gray-700/10 flex sm:justify-end sm:gap-4 sm:flex-row flex-col gap-2">
         <button
           onClick={handleSubmit}

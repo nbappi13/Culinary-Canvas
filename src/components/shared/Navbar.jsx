@@ -15,12 +15,13 @@ const Navbar = () => {
   const [isSmallScreen, setIsSmallScreen] = useState(false)
   const location = useLocation()
 
-  
+  // Close dropdowns when route changes
   useEffect(() => {
     setDropdownOpen(false)
     setMobileMenuOpen(false)
   }, [location])
 
+  // Check screen size for responsive design
   useEffect(() => {
     const checkScreenSize = () => {
       setIsSmallScreen(window.innerWidth <= 320)
@@ -34,6 +35,7 @@ const Navbar = () => {
     }
   }, [])
 
+  // Handle user logout with confirmation
   const handleLogout = async () => {
     try {
       await logout()
@@ -53,27 +55,30 @@ const Navbar = () => {
     }
   }
 
+  // Toggle dropdown menu
   const toggleDropdown = () => {
     setDropdownOpen(!dropdownOpen)
   }
 
+  // Toggle mobile menu
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!mobileMenuOpen)
   }
 
+  // Check if current route is active
   const isActive = (path) => {
     return location.pathname === path
   }
 
-  
+  // Handle home click with smooth scroll
   const handleHomeClick = (e) => {
     if (location.pathname === "/") {
-      e.preventDefault() 
+      e.preventDefault()
       window.scrollTo({
         top: 0,
-        behavior: "smooth", 
+        behavior: "smooth",
       })
-      setMobileMenuOpen(false) 
+      setMobileMenuOpen(false)
     }
   }
 
@@ -91,6 +96,7 @@ const Navbar = () => {
       }}
     >
       <div className="navbar-start">
+        {/* Mobile menu button */}
         <div className="dropdown">
           <label tabIndex={0} className="btn btn-ghost lg:hidden" onClick={toggleMobileMenu}>
             <svg
@@ -103,6 +109,7 @@ const Navbar = () => {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h8m-8 6h16" />
             </svg>
           </label>
+          {/* Mobile menu dropdown */}
           {mobileMenuOpen && (
             <ul
               tabIndex={0}
@@ -152,6 +159,7 @@ const Navbar = () => {
             </ul>
           )}
         </div>
+        {/* Logo and brand name */}
         <Link to="/" className="flex items-center space-x-2 text-xl font-bold" style={{ color: "inherit" }}>
           <img
             src={restaurant_logo || "/placeholder.svg"}
@@ -163,6 +171,7 @@ const Navbar = () => {
         </Link>
       </div>
 
+      {/* Desktop navigation menu */}
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1 text-1xl font-bold">
           <li className={isActive("/") ? "active" : ""}>
@@ -193,7 +202,9 @@ const Navbar = () => {
         </ul>
       </div>
 
+      {/* Right side of navbar */}
       <div className="navbar-end flex items-center" style={isSmallScreen ? { gap: "0.25rem" } : { gap: "1rem" }}>
+        {/* Theme toggle button */}
         <button
           onClick={toggleTheme}
           className="btn btn-ghost"
@@ -219,6 +230,7 @@ const Navbar = () => {
             </svg>
           )}
         </button>
+        {/* User authentication section */}
         {currentUser ? (
           <div className="dropdown dropdown-end">
             <label tabIndex={0} className="btn btn-ghost btn-circle avatar" onClick={toggleDropdown}>
@@ -226,6 +238,7 @@ const Navbar = () => {
                 <img src={currentUser.photoURL || "https://via.placeholder.com/150"} alt="Profile" loading="lazy" />
               </div>
             </label>
+            {/* User dropdown menu */}
             {dropdownOpen && (
               <ul
                 tabIndex={0}

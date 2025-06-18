@@ -9,6 +9,7 @@ const TopFoods = () => {
   const navigate = useNavigate()
   const { theme } = useTheme()
 
+  // Fetch top selling foods using React Query
   const {
     data: topFoods,
     isLoading,
@@ -18,6 +19,7 @@ const TopFoods = () => {
     queryFn: getTopSellingFoods,
   })
 
+  // Navigate to all foods page
   const handleSeeAll = () => {
     navigate("/all-foods")
   }
@@ -28,10 +30,12 @@ const TopFoods = () => {
         theme === "light" ? "bg-[#f7f9fc]" : ""
       }`}
     >
+      {/* Section title with decorative underline */}
       <h2 className="text-center text-4xl md:text-[2.2rem] lg:text-[2.3rem] xl:text-[2.5rem] mt-10 mb-8 md:mb-10 lg:mb-12 relative font-bold after:content-[''] after:absolute after:bottom-[-10px] after:left-1/2 after:transform after:-translate-x-1/2 after:w-[60px] after:h-[3px] after:bg-gradient-to-r after:from-[var(--button-bg)] after:to-[var(--button-hover-bg)] after:rounded-md">
         Top Foods
       </h2>
 
+      {/* Loading state */}
       {isLoading && (
         <div className="flex flex-col items-center justify-center min-h-[200px]">
           <div className="w-10 h-10 border-4 border-gray-200 border-t-[var(--button-bg)] rounded-full animate-spin mb-4"></div>
@@ -39,12 +43,14 @@ const TopFoods = () => {
         </div>
       )}
 
+      {/* Error state */}
       {isError && (
         <div className="flex flex-col items-center justify-center min-h-[200px]">
           <p>Error loading top foods. Please try again later.</p>
         </div>
       )}
 
+      {/* Foods grid and see all button */}
       {!isLoading && !isError && (
         <>
           {topFoods && topFoods.length > 0 ? (
@@ -62,6 +68,7 @@ const TopFoods = () => {
             <p className="text-center text-lg p-6">No top foods available.</p>
           )}
 
+          {/* See all foods button */}
           <button
             onClick={handleSeeAll}
             className="block mx-auto my-10 py-3 px-7 md:py-3 md:px-8 bg-[var(--button-bg)] text-[var(--button-text)] border-none rounded-[30px] text-base md:text-lg font-bold cursor-pointer transition-all duration-300 shadow-md hover:bg-[var(--button-hover-bg)] hover:-translate-y-[3px] hover:shadow-lg"

@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 
 const Register = () => {
+  // State for form inputs
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -12,6 +13,7 @@ const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
+  // Check if password meets requirements
   const validatePassword = (password) => {
     const hasUpperCase = /[A-Z]/.test(password);
     const hasLowerCase = /[a-z]/.test(password);
@@ -30,10 +32,12 @@ const Register = () => {
     return null;
   };
 
+  // Handle form submission
   const handleRegister = async (e) => {
     e.preventDefault();
     setError('');
 
+    // Check password first
     const passwordError = validatePassword(password);
     if (passwordError) {
       setError(passwordError);
@@ -41,26 +45,29 @@ const Register = () => {
     }
 
     try {
+      // Register user
       await registerWithEmailPassword(email, password);
+      // Show success message
       Swal.fire({
         title: 'Registration Successful!',
         icon: 'success',
         timer: 1500,
         showConfirmButton: false,
       });
-      navigate('/');
+      navigate('/'); // Go to home page
     } catch (err) {
-      setError(err.message);
+      setError(err.message); // Show error if registration fails
     }
   };
 
+  // Toggle password visibility
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
   };
 
   return (
     <div className="relative flex justify-center items-center min-h-screen">
-      
+      {/* Background image - visible on medium+ screens */}
       <div
         className="hidden md:block absolute inset-0 bg-cover bg-center"
         style={{
@@ -68,13 +75,14 @@ const Register = () => {
         }}
       ></div>
 
-     
+      {/* Dark overlay - visible on medium+ screens */}
       <div className="hidden md:block absolute inset-0 bg-black bg-opacity-50"></div>
 
-    
+      {/* Registration form */}
       <div className="relative max-w-lg w-4/5 transform -translate-x-10 md:translate-x-0 mx-auto p-6 bg-base-200 rounded-lg shadow-lg">
         <h2 className="text-2xl font-bold text-center mb-6">Register</h2>
         <form onSubmit={handleRegister}>
+          {/* Name input */}
           <div className="mb-4">
             <label className="block text-sm font-medium">Name</label>
             <input
@@ -85,6 +93,8 @@ const Register = () => {
               required
             />
           </div>
+          
+          {/* Email input */}
           <div className="mb-4">
             <label className="block text-sm font-medium">Email</label>
             <input
@@ -95,6 +105,8 @@ const Register = () => {
               required
             />
           </div>
+          
+          {/* Password input with toggle */}
           <div className="mb-4 relative">
             <label className="block text-sm font-medium">Password</label>
             <input
@@ -104,6 +116,7 @@ const Register = () => {
               onChange={(e) => setPassword(e.target.value)}
               required
             />
+            {/* Show/hide password button */}
             <span
               className="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer"
               onClick={toggleShowPassword}
@@ -153,6 +166,8 @@ const Register = () => {
               )}
             </span>
           </div>
+          
+          {/* Optional photo URL input */}
           <div className="mb-4">
             <label className="block text-sm font-medium">Photo URL (optional)</label>
             <input
@@ -162,9 +177,15 @@ const Register = () => {
               onChange={(e) => setPhotoURL(e.target.value)}
             />
           </div>
+          
+          {/* Show error if any */}
           {error && <p className="text-red-500 text-sm">{error}</p>}
+          
+          {/* Submit button */}
           <button type="submit" className="btn btn-primary w-full">Register</button>
         </form>
+        
+        {/* Login link */}
         <p className="text-sm text-center mt-4">
           Already have an account? <a href="/login" className="text-blue-500">Login</a>
         </p>
